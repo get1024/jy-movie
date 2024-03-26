@@ -25,14 +25,14 @@ SpringBoot+SpringSecurity+MyBatis-Plus 框架的前后端电影项目，前端�
 
 ### 2024年03月26日 18:37:48
 
-1. admin和worker端任务互通（原本显示的是new，现在只要新增任务就会实时更新）；<img src="E:\project\jy-movie\readme_assets\3568e16f0274d59fedbc7215e578a0a.png" alt="3568e16f0274d59fedbc7215e578a0a" style="zoom:50%;" />
+1. admin和worker端任务互通（原本显示的是new，现在只要新增任务就会实时更新）；![Image text]https://github.com/get1024/jy-movie/blob/main/readme_assets/3568e16f0274d59fedbc7215e578a0a.png
 
-   <img src="E:\project\jy-movie\readme_assets\94c4b700faa932878d0c3397ba74d82.png" alt="94c4b700faa932878d0c3397ba74d82" style="zoom:50%;" />
+   ![Image text]https://github.com/get1024/jy-movie/blob/main/readme_assets/94c4b700faa932878d0c3397ba74d82.png
 
-2. app首页轮播图样式修改（我觉得这样好看)；<img src="E:\project\jy-movie\readme_assets\8f5932eef4305840b2fe8082494f5f3.png" alt="8f5932eef4305840b2fe8082494f5f3" style="zoom:50%;" />
+2. app首页轮播图样式修改（我觉得这样好看)；![Image text]https://github.com/get1024/jy-movie/blob/main/readme_assets/870cab076bb917b8baada674d0cd92d.png
 
-3. 热门榜单的样式优化、后端数据库热度调整；<img src="E:\project\jy-movie\readme_assets\5bec3bebf6bbf54e5590e5b446672ca.png" alt="5bec3bebf6bbf54e5590e5b446672ca" style="zoom:50%;" />
+3. 热门榜单的样式优化、后端数据库热度调整；![Image text]https://github.com/get1024/jy-movie/blob/main/readme_assets/5bec3bebf6bbf54e5590e5b446672ca.png
 
-4. 留言reply功能优化；<img src="E:\project\jy-movie\readme_assets\870cab076bb917b8baada674d0cd92d.png" alt="870cab076bb917b8baada674d0cd92d" style="zoom:50%;" />
+4. 留言reply功能优化；![Image text]https://github.com/get1024/jy-movie/blob/main/readme_assets/870cab076bb917b8baada674d0cd92d.png
 
-5. admin个人设置功能删除（对应router中的‘setting’和setting.vue，这些我都注释了，没有删掉，后续可以解开）；![4968933f3fca7184dde79ad16d15ec8](E:\project\jy-movie\readme_assets\4968933f3fca7184dde79ad16d15ec8.png)
+5. admin个人设置功能删除（对应router中的‘setting’和setting.vue，这些我都注释了，没有删掉，后续可以解开）；![Image text]https://github.com/get1024/jy-movie/blob/main/readme_assets/4968933f3fca7184dde79ad16d15ec8.png
