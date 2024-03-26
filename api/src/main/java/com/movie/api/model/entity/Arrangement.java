@@ -33,7 +33,7 @@ public class Arrangement implements Serializable {
     //放映类型 2D 3D
     private String type;
 
-    //电影开始时间 2021-01-01
+    //电影开始时间 2024-01-01
     private String date;
 
     //电影开始时间 19:30:00

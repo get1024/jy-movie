@@ -12,15 +12,9 @@
             <div class="d1">性别: {{ item.gender }}</div>
             <div class="d1">ID: {{ item.id }}</div>
             <div>
-              <el-button
-                  @click="handleListEvaluate(item)"
-                  type="text">我的评价
+              <el-button @click="handleListEvaluate(item)" type="text">我的评价
               </el-button>
-              <el-button
-                  style="padding-left: 40px"
-                  :disabled="!isLogin"
-                  @click="handleEvaluate(item)"
-                  type="text">评价客服
+              <el-button style="padding-left: 40px" :disabled="!isLogin" @click="handleEvaluate(item)" type="text">评价客服
               </el-button>
             </div>
           </div>
@@ -39,16 +33,12 @@
               <div class="d2">Time: {{ item.leavingMessage.createAt }}</div>
             </div>
           </div>
-          <div v-if="!item.leavingMessage.reply" class="reply">
+          <div v-if="item.leavingMessage.reply" class="reply">
             <div class="d2">客服回复:</div>
             <div class="d3">{{ item.leavingMessage.reply }}</div>
           </div>
         </div>
-        <el-button :disabled="!isLogin"
-                   @click="handleLeaving"
-                   class="btn"
-                   type="success"
-                   icon="el-icon-share">
+        <el-button :disabled="!isLogin" @click="handleLeaving" class="btn" type="success" icon="el-icon-share">
           添加留言
         </el-button>
       </el-main>
@@ -87,9 +77,9 @@
         <el-table-column property="content" label="评语"></el-table-column>
         <el-table-column property="type" width="150">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.type==='非常满意'" type="success">非常满意</el-tag>
-            <el-tag v-if="scope.row.type==='满意'" type="info">满意</el-tag>
-            <el-tag v-if="scope.row.type==='不满意'" type="danger">不满意</el-tag>
+            <el-tag v-if="scope.row.type === '非常满意'" type="success">非常满意</el-tag>
+            <el-tag v-if="scope.row.type === '满意'" type="info">满意</el-tag>
+            <el-tag v-if="scope.row.type === '不满意'" type="danger">不满意</el-tag>
           </template>
         </el-table-column>
       </el-table>
@@ -99,7 +89,7 @@
 </template>
 
 <script>
-import {findById} from "@/api/user";
+import { findById } from "@/api/user";
 import {
   CreateEvaluate,
   CreateLeavingMessage,
@@ -194,7 +184,6 @@ export default {
 </script>
 
 <style scoped>
-
 .main {
   color: #FFFFFF;
   padding: 40px;
@@ -276,5 +265,4 @@ export default {
   padding-left: 75px;
   padding-top: 15px;
 }
-
 </style>

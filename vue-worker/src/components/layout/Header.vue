@@ -34,7 +34,7 @@
         </el-dropdown>
       </div>
       <div class="header-icon">
-        <el-tooltip content="小小影院 - 客服系统" placement="top">
+        <el-tooltip content="JY影院 - 客服系统" placement="top">
           <i style="font-size: 20px" class="el-icon-warning-outline"></i>
         </el-tooltip>
       </div>

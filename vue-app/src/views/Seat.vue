@@ -228,7 +228,7 @@ export default {
   width: 30%;
   height: 100%;
   float: left;
-  background: #f5f6f7;
+  background: white;
 }
 
 .seat-aside img {

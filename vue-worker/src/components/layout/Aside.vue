@@ -2,7 +2,7 @@
   <div class="aside">
     <div class="aside-header" style="padding-top: 30px">
       <img style="width: 40px; height: 40px;float: left" src="../../assets/img/logo.png" alt=""/>
-      <div style="padding-left: 15px;padding-top: 8px;float: left">小小影院 - 客服</div>
+      <div style="padding-left: 15px;padding-top: 8px;float: left">JY影院 - 客服</div>
     </div>
     <div>
       <el-col style="padding-top: 30px">

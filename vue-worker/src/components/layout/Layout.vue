@@ -37,7 +37,7 @@
     }
 
     .app-main {
-        background: #f5f6f7;
+        background: white;
         height: 100%;
     }
 
