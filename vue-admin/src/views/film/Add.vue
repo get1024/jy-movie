@@ -4,14 +4,8 @@
     <el-form ref="form" :model="form" label-width="80px">
 
       <el-form-item label="电影封面">
-        <el-upload
-            class="upload-demo"
-            drag
-            accept=".png,.jpg"
-            :headers="header"
-            :action="uploadAction"
-            :on-success="handleUploadSuccess"
-            multiple>
+        <el-upload class="upload-demo" drag accept=".png,.jpg" :headers="header" :action="uploadAction"
+          :on-success="handleUploadSuccess" multiple>
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
           <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过50mb</div>
@@ -45,7 +39,7 @@
       <el-form-item label="上映时间">
         <el-col :span="11">
           <el-date-picker type="date" placeholder="选择日期" value-format="yyyy-MM-dd" v-model="form.releaseTime"
-                          style="width: 100%;"></el-date-picker>
+            style="width: 100%;"></el-date-picker>
         </el-col>
       </el-form-item>
 
@@ -91,7 +85,7 @@
 </template>
 
 <script>
-import {AddFilm} from "@/api/film";
+import { AddFilm } from "@/api/film";
 import config from "@/config";
 
 export default {
@@ -105,7 +99,7 @@ export default {
       form: {
         cover: 'null',
         name: '',
-        region: '',
+        region: '内地',
         releaseTime: '',
         duration: 120,
         introduction: '',

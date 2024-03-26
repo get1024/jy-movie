@@ -1,11 +1,9 @@
 <template>
   <div class="app">
 
-    <el-carousel height="500px" indicator-position="outside">
+    <el-carousel height="400px" :interval="4000" type="card" indicator-position="outside">
       <el-carousel-item v-for="(item, index) in posterList" :key="index">
-        <img alt=""
-             :src="item.url"
-             style="width: 100%;height: 500px">
+        <img alt="" :src="item.url" style="width: 100%;height: 400px;border-radius: 50px">
       </el-carousel-item>
     </el-carousel>
 
@@ -47,7 +45,7 @@
                 <router-link :to="'/film/info?fid=' + top2.id" target="_blank">
                   <i class="ranking-index">2</i>
                   <span class="img-link">
-                    <img style="height: 180px" class="ranking-img default-img" :alt="top2.name" :src="top2.cover"></span>
+                    <img class="ranking-img default-img" :alt="top2.name" :src="top2.cover"></span>
                   <div class="name-link ranking-movie-name">{{ top2.name }}</div>
                   <span class="ranking-num-info"><span class="stonefont">热度值: </span>{{ top2.hot }}</span>
                 </router-link>
@@ -57,7 +55,7 @@
                 <router-link :to="'/film/info?fid=' + top3.id" target="_blank">
                   <i class="ranking-index">3</i>
                   <span class="img-link">
-                    <img style="height: 180px" class="ranking-img default-img" :alt="top3.name" :src="top3.cover"></span>
+                    <img class="ranking-img default-img" :alt="top3.name" :src="top3.cover"></span>
                   <div class="name-link ranking-movie-name">{{ top3.name }}</div>
                   <span class="ranking-num-info"><span class="stonefont">热度值: </span>{{ top3.hot }}</span>
                 </router-link>
@@ -85,7 +83,7 @@
         <div class="panel">
           <div class="panel-header">
             <span class="panel-title">
-              <span class="textcolor_orange">正在热播  ( {{ filmList.length }} )</span>
+              <span class="textcolor_orange">正在热播 ( {{ filmList.length }} )</span>
             </span>
           </div>
           <div class="panel-content">
@@ -94,20 +92,19 @@
                 <router-link :to="'/film/info?fid=' + item.id">
                   <div class="movie-item">
                     <div class="movie-poster">
-                      <img class="poster-default" alt=""
-                           :src="item.cover">
-                      <img class="movie-poster-img" alt="不要先生与好的女士海报封面"
-                           :src="item.cover">
+                      <img class="poster-default" alt="" :src="item.cover">
+                      <img class="movie-poster-img" alt="不要先生与好的女士海报封面" :src="item.cover">
                       <div class="movie-overlay movie-overlay-bg">
                         <div class="movie-info">
                           <div class="movie-title" title="">{{ item.name }}</div>
                         </div>
                       </div>
                     </div>
-                    <div class="movie-detail movie-wish"><span class="stonefont">123</span>人想看</div>
+                    <!-- <div class="movie-detail movie-wish"><span class="stonefont">123</span>人想看</div> -->
+                    <div class="movie-detail movie-rt">{{ item.releaseTime }} 上映</div>
                     <div class="movie-ver"></div>
                   </div>
-                  <div class="movie-detail movie-rt">{{ item.releaseTime }} 上映</div>
+
                 </router-link>
               </dd>
             </dl>
@@ -120,7 +117,7 @@
 </template>
 
 <script>
-import {ListAllFilm, ListAllPoster, ListHots} from "@/api/film";
+import { ListAllFilm, ListAllPoster, ListHots } from "@/api/film";
 
 export default {
 

@@ -2,78 +2,42 @@
   <div>
     <el-carousel v-if="posterList.length !== 0" height="500px" indicator-position="outside">
       <el-carousel-item v-for="(item, index) in posterList" :key="index">
-        <img alt=""
-             :src="item.url"
-             class="image">
+        <img alt="" :src="item.url" class="image" style="border-radius: 50px;width: 90%;margin-left: 5%">
       </el-carousel-item>
     </el-carousel>
 
     <div class="content">
-      <el-button
-          @click="dialogFormVisible = true"
-          type="primary"
-          icon="el-icon-upload">
+      <el-button @click="dialogFormVisible = true" type="primary" icon="el-icon-upload">
         上传轮播海报
       </el-button>
-      <el-button
-          style="margin-left: 10px"
-          type="danger"
-          icon="el-icon-delete"
-          @click="deleteAllPoster">
+      <el-button style="margin-left: 10px" type="danger" icon="el-icon-delete" @click="deleteAllPoster">
         删除所有海报
       </el-button>
-      <el-table
-          ref="filterTable"
-          :data="posterList"
-          style="width: 100%;margin-top: 15px;">
-        <el-table-column
-            prop="createAt"
-            label="上传时间"
-            width="220"
-        >
+      <el-table ref="filterTable" :data="posterList" style="width: 100%;margin-top: 15px;">
+        <el-table-column prop="createAt" label="上传时间" width="220">
         </el-table-column>
-        <el-table-column
-            prop="title"
-            label="标题"
-            width="180">
+        <el-table-column prop="title" label="标题" width="180">
         </el-table-column>
         <el-table-column label="地址预览">
           <template slot-scope="scope">
             <a target="_blank" :href="scope.row.url">{{ scope.row.url }}</a>
           </template>
         </el-table-column>
-        <el-table-column
-            prop="status"
-            label="上架状态"
-            width="220">
+        <el-table-column prop="status" label="上架状态" width="220">
           <template slot-scope="scope">
-            <el-tag
-                v-if="scope.row.status"
-                type="success"
-                disable-transitions>上架
+            <el-tag v-if="scope.row.status" type="success" disable-transitions>上架
             </el-tag>
-            <el-tag
-                v-else
-                type="warning"
-                disable-transitions>下架
+            <el-tag v-else type="warning" disable-transitions>下架
             </el-tag>
-            <el-button v-if="!scope.row.status"
-                       style="padding: 0 15px;color: #67C23A"
-                       type="text"
-                       @click="changePosterStatus(scope.$index, scope.row, true)"
-                       icon="el-icon-upload2">上架
+            <el-button v-if="!scope.row.status" style="padding: 0 15px;color: #67C23A" type="text"
+              @click="changePosterStatus(scope.$index, scope.row, true)" icon="el-icon-upload2">上架
             </el-button>
-            <el-button v-else
-                       style="padding: 0 15px;color: #E6A23C"
-                       type="text"
-                       @click="changePosterStatus(scope.$index, scope.row, false)"
-                       icon="el-icon-download">下架
+            <el-button v-else style="padding: 0 15px;color: #E6A23C" type="text"
+              @click="changePosterStatus(scope.$index, scope.row, false)" icon="el-icon-download">下架
             </el-button>
             <template style="padding-left: 100px">
               <el-popconfirm @confirm="handleDeletePoster(scope.$index, scope.row.id)" title="确定要删除这条内容吗？">
-                <el-button slot="reference"
-                           style="color: #F56C6C" type="text"
-                           icon="el-icon-delete">删除
+                <el-button slot="reference" style="color: #F56C6C" type="text" icon="el-icon-delete">删除
                 </el-button>
               </el-popconfirm>
             </template>
@@ -94,15 +58,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="选择图片" label-width="120px">
-          <el-upload
-              style="float: left"
-              class="upload-demo"
-              accept=".png,.jpg"
-              :headers="header"
-              :action="uploadAction"
-              :on-success="handleUploadSuccess"
-              multiple
-              :limit="1">
+          <el-upload style="float: left" class="upload-demo" accept=".png,.jpg" :headers="header" :action="uploadAction"
+            :on-success="handleUploadSuccess" multiple :limit="1">
             <el-button type="primary" icon="el-icon-upload">上传轮播海报</el-button>
           </el-upload>
         </el-form-item>
@@ -118,7 +75,7 @@
 
 <script>
 import config from "@/config";
-import {AddPoster, DeleteAllPoster, DeletePosterById, ListAllPoster, UpdatePoster} from "@/api/film";
+import { AddPoster, DeleteAllPoster, DeletePosterById, ListAllPoster, UpdatePoster } from "@/api/film";
 
 export default {
 
@@ -190,7 +147,6 @@ export default {
 </script>
 
 <style scoped>
-
 .content {
   padding: 20px 40px;
 }
@@ -207,5 +163,4 @@ export default {
   width: 100%;
   height: 500px;
 }
-
 </style>

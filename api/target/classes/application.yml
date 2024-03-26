@@ -6,6 +6,9 @@ spring:
     url: jdbc:mysql://localhost:3306/jy-movie?characterEncoding=utf8&serverTimezone=UTC
     username: root
     password: 20020421RJY.
+  servlet:
+    multipart:
+      max-file-size: 251658240
   cache:
     redis:
       #使用前缀

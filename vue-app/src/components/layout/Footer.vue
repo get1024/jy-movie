@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <p> Copyright 2024 JY影院</p>
-    <p>京公网安备 1101010110110110号 京ICP备123456789号-1</p>
+    <p>联系邮箱：junyeren@outlook.com 京ICP备123456789号-1</p>
   </div>
 </template>
 

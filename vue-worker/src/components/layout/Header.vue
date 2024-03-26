@@ -5,8 +5,7 @@
         <el-dropdown>
           <el-button type="text">
             <div class="header-name">{{ worker.nickname }}</div>
-            <img style="margin-top: 5px;width: 29px;height: 29px;border-radius: 50%"
-                 :src="worker.avatar" alt="null"/>
+            <img style="margin-top: 5px;width: 29px;height: 29px;border-radius: 50%" :src="worker.avatar" alt="null" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
@@ -25,11 +24,12 @@
 
       <div class="header-icon" style="padding-top: 16px">
         <el-dropdown>
-          <el-badge value="new" class="item">
+          <el-badge :value="list.length" class="item">
             <i style="font-size: 18px" class="el-icon-bell"></i>
           </el-badge>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>这里还没有消息</el-dropdown-item>
+            <el-dropdown-item v-for="item in list" :key="item">{{ item.content }}</el-dropdown-item>
+            <el-dropdown-item v-if="list.length === 0">还没有安排今日工作</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import {FindWorkerById} from "@/api/worker";
+import { FindWorkerById, ListDailyWork } from "@/api/worker";
 
 export default {
   name: "Header",
@@ -57,14 +57,20 @@ export default {
         gender: '',
         avatar: '',
         department: '',
-      }
+      },
+      list: []
     }
   },
 
   mounted() {
     FindWorkerById(localStorage.getItem("wid")).then(res => {
       this.worker = res.data;
-    })
+    }),
+      ListDailyWork().then(res => {
+        setTimeout(() => {
+          this.list = res.data
+        }, 700)
+      })
   },
 
   methods: {
@@ -80,10 +86,7 @@ export default {
 </script>
 
 <style scoped>
-
-.header {
-
-}
+.header {}
 
 .header-icon {
   float: right;

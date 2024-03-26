@@ -5,17 +5,16 @@
         <el-dropdown>
           <el-button type="text">
             <div class="header-name">Admin</div>
-            <el-avatar style="margin-top: 5px" :size="29"
-                       src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png">
-            </el-avatar>
+            <img style="margin-top: 5px" width="28.9999px" src="../../assets/img/admin.png"></img>
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
+            <!-- admin设置界面，由于upload有bug，决定不给admin这个功能 -->
+            <!-- <el-dropdown-item>
               <el-link :underline="false" href="/setting">
                 <i style="font-size: 15px; padding-right: 3px" class="el-icon-setting"></i>个人设置
               </el-link>
-            </el-dropdown-item>
-            <el-dropdown-item divided>
+            </el-dropdown-item> -->
+            <el-dropdown-item>
               <el-button type="text" @click="handleLogout">
                 <i style="font-size: 15px; padding-right: 3px" class="el-icon-switch-button"></i>退出登录
               </el-button>
@@ -26,7 +25,7 @@
 
       <div class="header-icon" style="padding-top: 16px">
         <el-dropdown>
-          <el-badge value="new" class="item">
+          <el-badge :value="list.length" class="item">
             <i style="font-size: 18px" class="el-icon-bell"></i>
           </el-badge>
           <el-dropdown-menu slot="dropdown">
@@ -45,7 +44,7 @@
 </template>
 
 <script>
-import {ListDailyWork} from "@/api/worker";
+import { ListDailyWork } from "@/api/worker";
 
 export default {
   name: "Header",
@@ -80,10 +79,7 @@ export default {
 </script>
 
 <style scoped>
-
-.header {
-
-}
+.header {}
 
 .header-icon {
   float: right;
