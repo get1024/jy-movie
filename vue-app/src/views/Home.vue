@@ -16,7 +16,7 @@
               <span class="panel-arrow panel-arrow-orange"></span>
             </span>
             <span class="panel-title">
-              <span class="textcolor_orange">热门榜单Top10</span>
+              <span class="textcolor_orange">热门榜单Top20</span>
             </span>
           </div>
           <div class="panel-content">
