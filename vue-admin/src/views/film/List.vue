@@ -259,7 +259,7 @@ export default {
       arrangement: {
         name: '',
         fid: '',
-        seatNumber: 40,
+        seatNumber: 48,
         price: 30.50,
         date: '',
         startTime: '',

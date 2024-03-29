@@ -1,10 +1,7 @@
 <template>
   <div class="main">
 
-    <el-dialog
-        title="新增电影排片"
-        :visible.sync="dialog"
-        width="50%">
+    <el-dialog title="新增电影排片" :visible.sync="dialog" width="50%">
 
       <el-form ref="form" :model="arrangement" label-width="80px">
 
@@ -25,20 +22,20 @@
 
         <el-form-item style="width: 500px" label="放映日期">
           <el-col :span="11">
-            <el-date-picker type="date" placeholder="选择日期" v-model="arrangement.date"
-                            value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择日期" v-model="arrangement.date" value-format="yyyy-MM-dd"
+              style="width: 100%;"></el-date-picker>
           </el-col>
         </el-form-item>
 
         <el-form-item style="width: 500px" label="放映时间">
           <el-col :span="11">
             <el-time-picker placeholder="开始时间" value-format="HH:mm:ss" v-model="arrangement.startTime"
-                            style="width: 100%;"></el-time-picker>
+              style="width: 100%;"></el-time-picker>
           </el-col>
           <el-col style="text-align: center" class="line" :span="2">-</el-col>
           <el-col :span="11">
             <el-time-picker placeholder="结束时间" value-format="HH:mm:ss" v-model="arrangement.endTime"
-                            style="width: 100%;"></el-time-picker>
+              style="width: 100%;"></el-time-picker>
           </el-col>
         </el-form-item>
 
@@ -57,24 +54,17 @@
       </span>
     </el-dialog>
 
-    <el-table
-        v-loading="loading"
-        :data="List.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-        style="width: 100%">
+    <el-table v-loading="loading"
+      :data="List.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+      style="width: 100%">
 
-      <el-table-column
-          label="电影名"
-          prop="name">
+      <el-table-column label="电影名" prop="name">
       </el-table-column>
 
-      <el-table-column
-          label="放映日期"
-          prop="date">
+      <el-table-column label="放映日期" prop="date">
       </el-table-column>
 
-      <el-table-column
-          label="开放座位"
-          prop="seatNumber">
+      <el-table-column label="开放座位" prop="seatNumber">
       </el-table-column>
 
       <el-table-column label="放映类型">
@@ -84,14 +74,10 @@
         </template>
       </el-table-column>
 
-      <el-table-column
-          label="票房统计"
-          prop="boxOffice">
+      <el-table-column label="票房统计" prop="boxOffice">
       </el-table-column>
 
-      <el-table-column
-          label="结束时间"
-          prop="endTime">
+      <el-table-column label="结束时间" prop="endTime">
       </el-table-column>
 
       <el-table-column label="本场票价">
@@ -102,39 +88,18 @@
 
       <el-table-column width="300" align="right">
         <template slot="header" slot-scope="scope">
-          <el-input
-              v-model="search"
-              size="mini"
-              placeholder="输入关键字搜索"/>
+          <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
         </template>
         <template style="white-space: nowrap" slot-scope="scope">
-          <el-button
-              size="mini"
-              icon="el-icon-s-ticket"
-              type="success"
-              @click="handleBoxOffice(scope.$index, scope.row)">统计票房
+          <el-button size="mini" icon="el-icon-s-ticket" type="success"
+            @click="handleBoxOffice(scope.$index, scope.row)">统计票房
           </el-button>
-          <el-button
-              size="mini"
-              icon="el-icon-edit"
-              type="primary"
-              @click="handleEdit(scope.$index, scope.row)">修改
+          <el-button size="mini" icon="el-icon-edit" type="primary" @click="handleEdit(scope.$index, scope.row)">修改
           </el-button>
 
-          <el-popconfirm
-              confirm-button-text='确定'
-              cancel-button-text='不用了'
-              icon="el-icon-info"
-              icon-color="red"
-              @confirm="handleDelete(scope.$index, scope.row)"
-              title=" 确定要删除此电影档期吗？ "
-          >
-            <el-button
-                style="margin-left: 8px"
-                size="mini"
-                icon="el-icon-delete"
-                type="danger"
-                slot="reference">删除
+          <el-popconfirm confirm-button-text='确定' cancel-button-text='不用了' icon="el-icon-info" icon-color="red"
+            @confirm="handleDelete(scope.$index, scope.row)" title=" 确定要删除此电影档期吗？ ">
+            <el-button style="margin-left: 8px" size="mini" icon="el-icon-delete" type="danger" slot="reference">删除
             </el-button>
           </el-popconfirm>
         </template>
@@ -146,8 +111,8 @@
 </template>
 
 <script>
-import {FindAllArrangement, DeleteArrangement, UpdateArrangement} from "@/api/film";
-import {UpdateUser} from "@/api/user";
+import { FindAllArrangement, DeleteArrangement, UpdateArrangement } from "@/api/film";
+import { UpdateUser } from "@/api/user";
 
 export default {
   name: "Arrange",
@@ -160,7 +125,7 @@ export default {
       arrangement: {
         name: '',
         fid: '',
-        seatNumber: 40,
+        seatNumber: 48,
         price: 30.50,
         date: '',
         startTime: '',
@@ -219,7 +184,7 @@ export default {
       this.$prompt('请输入此场次的票房', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-      }).then(({value}) => {
+      }).then(({ value }) => {
         if (!value) {
           this.$message({
             type: 'warning',

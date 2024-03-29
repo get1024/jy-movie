@@ -5,17 +5,17 @@
         <li class="tags-line">
           <div class="tags-title">类型 :</div>
           <ul class="tags">
-            <li v-for="item in typeList" :class="selectType===item ? 'active' : ''" @click="handleTypeSelect(item)">
-              <router-link :to=" '/films?region='+ selectRegion + '&type=' + item ">{{ item }}</router-link>
+            <li v-for="item in typeList" :class="selectType === item ? 'active' : ''" @click="handleTypeSelect(item)">
+              <router-link :to="'/films?region=' + selectRegion + '&type=' + item">{{ item }}</router-link>
             </li>
           </ul>
         </li>
         <li class="tags-line">
           <div class="tags-title">地区 :</div>
           <ul class="tags">
-            <li v-for="item in regionList" :class="selectRegion===item ? 'active' : ''"
-                @click="handleRegionSelect(item)">
-              <router-link :to=" '/films?region='+ item + '&type=' + selectType ">{{ item }}</router-link>
+            <li v-for="item in regionList" :class="selectRegion === item ? 'active' : ''"
+              @click="handleRegionSelect(item)">
+              <router-link :to="'/films?region=' + item + '&type=' + selectType">{{ item }}</router-link>
             </li>
           </ul>
         </li>
@@ -24,11 +24,10 @@
     <div>
       <el-row :gutter="20" style="padding-top: 60px;">
         <el-col style="padding-bottom: 40px;text-align: center;" v-for="(item, index) in filmList" :key="index"
-                :span="4">
-          <router-link :to=" '/film/info?fid=' + item.id">
+          :span="4">
+          <router-link :to="'/film/info?fid=' + item.id">
             <el-card shadow="hover" style="padding: 0">
-              <img style="width: 100%; height: 300px;padding-bottom: 10px" :src="item.cover"
-                   alt="">
+              <img style="width: 100%; height: 247px;padding-bottom: 10px" :src="item.cover" alt="">
               <span class="s">{{ item.name }}</span>
             </el-card>
           </router-link>
@@ -40,7 +39,7 @@
 
 <script>
 
-import {FindFilmByRegionAndType, ListAllFilm} from "@/api/film";
+import { FindFilmByRegionAndType, ListAllFilm } from "@/api/film";
 
 export default {
 
@@ -93,7 +92,7 @@ export default {
   padding: 20px 220px;
 }
 
->>> .el-card__body {
+>>>.el-card__body {
   padding: 0 0 10px;
 }
 
@@ -101,11 +100,10 @@ export default {
   margin-bottom: 10px;
   padding: 0 8px;
   letter-spacing: 1px;
-  color: coral;
+  color: #409eff;
   text-align: center;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-
 </style>

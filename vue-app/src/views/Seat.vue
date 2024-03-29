@@ -9,16 +9,14 @@
     <div class="seat-content">
       <div class="seat-aside">
         <div style="display: flex">
-          <img style="padding: 30px" :src="film.cover" alt=""/>
+          <img style="padding: 30px" :src="film.cover" alt="" />
           <div>
-            <div
-                style="
+            <div style="
                 padding-top: 40px;
                 padding-bottom: 10px;
                 font-size: 25px;
                 letter-spacing: 2px;
-              "
-            >
+              ">
               {{ film.name }}
             </div>
             <div class="seat-aside-text">类型：{{ film.type }}</div>
@@ -37,47 +35,42 @@
           <el-divider></el-divider>
           <div class="d1">
             已选座位：
-            <el-tag v-for="(item, i) in userSelectSeats" :key="i"
-                    type="danger"
-                    style="margin-right: 5px"
-                    effect="plain">
+            <el-tag v-for="(item, i) in userSelectSeats" :key="i" type="danger" style="margin-right: 5px"
+              effect="light">
               {{ item }} 号
             </el-tag>
           </div>
           <div class="d1" style="padding-top: 10px">
             总计：
             <span style="color: #f56c6c">¥ </span>
-            <span style="color: #f56c6c; font-size: 25px; font-weight: bold"
-            >{{ cart.price }}</span
-            >
+            <span style="color: #f56c6c; font-size: 25px; font-weight: bold">{{ cart.price }}</span>
           </div>
           <el-divider></el-divider>
           <div style="padding: 0 50px">
-            <el-input
-                v-model="cart.phone"
-                style="padding-top: 20px; padding-bottom: 30px"
-                placeholder="请输入手机号码"
-                clearable
-            >
+            <el-input v-model="cart.phone" style="padding-top: 20px; padding-bottom: 30px" placeholder="请输入手机号码"
+              clearable>
             </el-input>
-            <el-button @click="submitSeat" class="add-cart-btn" type="danger" round
-            >加入购物车
+            <el-button @click="submitSeat" class="add-cart-btn" type="danger" round>加入购物车
             </el-button>
           </div>
         </div>
       </div>
 
       <div class="hall seat-select">
-        <div style="padding-left: 30px" class="seat-example">
+        <div class="seat-example">
           <div class="selectable-example example">
             <span>可选座位</span>
           </div>
+          <!-- <div class="couple-example example">
+            <span>情侣卡座</span>
+          </div> -->
           <div class="sold-example example">
             <span>已售座位</span>
           </div>
           <div class="selected-example example">
             <span>已选座位</span>
           </div>
+
         </div>
 
         <div class="seats-block">
@@ -91,11 +84,11 @@
               <div style="padding: 0 40px;width: 500px">
                 <span v-for="(item, index) in seats" :key="index">
                   <!--不可选-->
-                  <span v-if="item.status === 0" class="seat sold item"/>
+                  <span v-if="item.status === 0" class="seat sold item" />
                   <!--可选-->
-                  <span v-if="item.status === 1" @click="handleSelect(index)" class="seat selectable item"/>
+                  <span v-if="item.status === 1" @click="handleSelect(index)" class="seat selectable item" />
                   <!--已选-->
-                  <span v-if="item.status === 2" @click="handleDisSelect(index)" class="seat selected item"/>
+                  <span v-if="item.status === 2" @click="handleDisSelect(index)" class="seat selected item" />
                 </span>
               </div>
             </div>
@@ -107,8 +100,8 @@
 </template>
 
 <script>
-import {FindArrangementById, GetArrangementSeats} from "@/api/film";
-import {CreateCart} from "@/api/cart";
+import { FindArrangementById, GetArrangementSeats } from "@/api/film";
+import { CreateCart } from "@/api/cart";
 
 export default {
   data() {
@@ -117,7 +110,7 @@ export default {
         uid: localStorage.getItem("uid"),
         aid: this.$route.query.id,
         seats: '',
-        phone: "",
+        phone: "18903803658",
         price: 0
       },
       arrangement: {},
@@ -148,9 +141,9 @@ export default {
       let arr = new Array(n)
       for (let i = 0; i < n; i++) {
         if (this.selectSeats.indexOf(i + 1) === -1) {
-          arr[i] = {seat: i + 1, status: 1}
+          arr[i] = { seat: i + 1, status: 1 }
         } else {
-          arr[i] = {seat: i + 1, status: 0}
+          arr[i] = { seat: i + 1, status: 0 }
         }
       }
       this.seats = arr
@@ -272,7 +265,7 @@ export default {
   padding-bottom: 11px;
 }
 
->>> .el-input__inner {
+>>>.el-input__inner {
   border-radius: 50px;
   height: 55px;
 }

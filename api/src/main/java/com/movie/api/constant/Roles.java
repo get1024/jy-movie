@@ -23,7 +23,7 @@ public final class Roles {
     //新增电影
     public final static String ROLE_ADD_FILM = "ROLE_ADD_FILM";
 
-    //添加拍片
+    //添加排片
     public final static String ROLE_ADD_ARRANGEMENT = "ROLE_ADD_ARRANGEMENT";
 
     //删除电影

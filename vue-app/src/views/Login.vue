@@ -14,10 +14,11 @@
                 <div style="padding-top: 10px">
                     <el-checkbox v-model="remember">记住密码</el-checkbox>
                     <div style="float: right">
-                        <el-link href="/forget" style="font-weight: bolder;font-size: 14px;color: #91949c;"
-                            :underline="false">
-                            忘记密码?
-                        </el-link>
+                        <el-tooltip class="item" effect="dark" content="请联系管理员修改" placement="bottom">
+                            <el-link style="font-weight: bolder;font-size: 14px;color: #91949c;" :underline="false">
+                                忘记密码?
+                            </el-link>
+                        </el-tooltip>
                     </div>
                 </div>
                 <el-button @click="postLogin" class="login-form-button" type="primary">SIGN IN</el-button>

@@ -2,7 +2,7 @@
   <div class="header">
     <div style="height: 70px;width: 100%">
       <div class="header-logo">
-        <img style="width: 50px; height: 50px;float: left" src="../../assets/img/logo.png" alt=""/>
+        <img style="width: 50px; height: 50px;float: left" src="../../assets/img/logo.png" alt="" />
         <div class="header-logo-text">JY影院</div>
       </div>
       <div class="header-links">
@@ -13,28 +13,22 @@
       </div>
 
       <div class="header-search">
-        <el-autocomplete
-            style="width: 250px"
-            v-model="state"
-            :fetch-suggestions="querySearchAsync"
-            placeholder="请输入电影名"
-            @select="handleSelect"
-        />
+        <el-autocomplete style="width: 250px" v-model="state" :fetch-suggestions="querySearchAsync" placeholder="请输入电影名"
+          @select="handleSelect" />
       </div>
 
       <el-link v-if="!isLogin" href="/login" style="float: right;padding-top: 23px;padding-right: 50px"
-               class="header-link"
-               :underline="false">
+        class="header-link" :underline="false">
         登录
       </el-link>
       <el-dropdown v-if="isLogin" style="float: right;padding-right: 10px">
-        <el-button type="text">
+        <el-button type="text" style="margin-right: 145px;">
           <div class="header-name">{{ this.user.nickname }}
             <i class="el-icon-caret-bottom"></i>
           </div>
           <img alt="" style="width: 45px;height: 45px;border-radius: 50%" :src="user.avatar">
         </el-button>
-        <el-dropdown-menu slot="dropdown">
+        <el-dropdown-menu slot="dropdown" style="margin-right: 145px;">
           <el-dropdown-item>
             <el-link :underline="false" href="/me/cart" style="padding-right: 7px">
               <i style="font-size: 15px; padding-right: 3px" class="el-icon-shopping-cart-2"></i>购物车
@@ -63,9 +57,9 @@
 </template>
 
 <script>
-import {findById} from "@/api/user";
+import { findById } from "@/api/user";
 import config from "@/config";
-import {SearchFilm} from "@/api/film";
+import { SearchFilm } from "@/api/film";
 
 export default {
   name: "Header",
@@ -179,7 +173,7 @@ export default {
   letter-spacing: 2px;
 }
 
->>> .el-input__inner {
+>>>.el-input__inner {
   border-radius: 20px;
   height: 40px;
 }

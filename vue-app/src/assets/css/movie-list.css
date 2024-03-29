@@ -458,7 +458,7 @@ img.movie-hover-img {
   margin-left: 40px !important;
 }
 .tags a:hover {
-  color: #ef4238;
+  color: #409eff;
 }
 .tags li {
   border-radius: 14px;
@@ -467,7 +467,7 @@ img.movie-hover-img {
   margin-left: 12px;
 }
 .tags li.active {
-  background: #f34d41;
+  background: #409eff;
   color: #fff;
 }
 .tags li a {
