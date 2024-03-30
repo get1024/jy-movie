@@ -39,7 +39,7 @@ public class Order implements Serializable {
     //创建时间
     private String createAt;
 
-    //更新时间
+    //支付时间
     private String payAt;
 
 }
