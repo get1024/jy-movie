@@ -1,5 +1,5 @@
->[!什么项目？！🖥️]
->基于SpringBoot➕vue的前后端分离的电影购票系统
+>什么项目？
+>🖥️基于SpringBoot➕vue的前后端分离的电影购票系统
 
 ![app-home-vue](https://github.com/get1024/jy-movie/blob/main/readme_assets/app_home_vue.png)
 # 📃介绍
