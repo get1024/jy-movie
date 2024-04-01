@@ -1,10 +1,7 @@
 <template>
   <div class="main">
 
-    <el-table
-        v-loading="loading"
-        :data="orders"
-        style="width: 100%">
+    <el-table v-loading="loading" :data="orders" style="width: 100%">
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -38,25 +35,13 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column
-          label="订单 ID"
-          width="400"
-          prop="order.id">
+      <el-table-column label="订单 ID" width="400" prop="order.id">
       </el-table-column>
-      <el-table-column
-          width="200"
-          label="电影名"
-          prop="film.name">
+      <el-table-column width="200" label="电影名" prop="film.name">
       </el-table-column>
-      <el-table-column
-          width="200"
-          label="订购座位"
-          prop="order.seats">
+      <el-table-column width="200" label="订购座位" prop="order.seats">
       </el-table-column>
-      <el-table-column
-          width="200"
-          label="订单金额"
-          prop="order.price">
+      <el-table-column width="200" label="订单金额" prop="order.price">
       </el-table-column>
       <el-table-column label="订单状态">
         <template slot-scope="scope">
@@ -72,7 +57,7 @@
 </template>
 
 <script>
-import {CreateOrderException, FindAllOrder, UpdateOrder} from "@/api/order";
+import { CreateOrderException, FindAllOrder, UpdateOrder } from "@/api/order";
 
 export default {
 

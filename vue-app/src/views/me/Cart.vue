@@ -9,7 +9,7 @@
           <div style="float: left;line-height: 100px;padding-right: 20px">
             <el-checkbox @change="handleCheck" v-model="selectList[index].checked"></el-checkbox>
           </div>
-          <img class="item-film-img" alt="" src="../../assets/img/film.png"/>
+          <img class="item-film-img" alt="" :src="item.film.cover" />
           <div style="float: left;">
             <div class="item-film-name">《{{ item.film.name }}》</div>
             <div class="item-film-seat">座位 : {{ item.cart.seats }}</div>
@@ -20,16 +20,14 @@
           </div>
           <div style="float: right;color: #f34d41;letter-spacing: 2px; line-height: 100px;padding-right: 5px">
             ￥{{ item.cart.price }}
-            <el-button @click="handleDelete(index)"
-                       type="text"
-                       style="color: red;padding-left: 50px"
-                       icon="el-icon-delete">删除
+            <el-button @click="handleDelete(index)" type="text" style="color: red;padding-left: 50px"
+              icon="el-icon-delete">删除
             </el-button>
           </div>
         </div>
       </el-card>
 
-      <div v-if="cartList.length !==0" style="height: 60px;background: #91949c">
+      <div v-if="cartList.length !== 0" style="height: 60px;background: #91949c">
         <div>
           <div style="float: left;line-height: 60px;padding: 0 20px;font-size: 14px">
             <el-checkbox @change="handleCheckAll" v-model="checkAll">全 选</el-checkbox>
@@ -40,26 +38,21 @@
       </div>
     </div>
 
-    <el-dialog
-        title="扫码支付"
-        :show-close="false"
-        width="30%"
-        :visible.sync="centerDialogVisible"
-    >
+    <el-dialog title="扫码支付" :show-close="false" width="30%" :visible.sync="centerDialogVisible">
       <div>
         <img class="c-img" src="../../assets/img/c.jpeg" alt="">
       </div>
       <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="submitPay">支 付 成 功</el-button>
-  </span>
+        <el-button type="primary" @click="submitPay">支 付 成 功</el-button>
+      </span>
     </el-dialog>
 
   </div>
 </template>
 
 <script>
-import {DeleteCartById, ListCarts} from "@/api/cart"
-import {CreateOrder} from "@/api/order";
+import { DeleteCartById, ListCarts } from "@/api/cart"
+import { CreateOrder } from "@/api/order";
 
 export default {
   data() {
@@ -88,7 +81,7 @@ export default {
         setTimeout(() => {
           this.cartList = res.data
           for (let i = 0; i < this.cartList.length; i++) {
-            this.selectList[i] = {checked: false, cart: this.cartList[i].cart}
+            this.selectList[i] = { checked: false, cart: this.cartList[i].cart }
           }
           this.loading = false
         }, 700)
@@ -187,12 +180,11 @@ export default {
 </script>
 
 <style scoped>
-
 .box-card {
   margin-bottom: 5px;
 }
 
->>> .el-card__header {
+>>>.el-card__header {
   background: #C0C4CC;
 }
 

@@ -1,12 +1,14 @@
+<!--
+ * @Date: 2024-03-26 10:23:36
+ * @LastEditors: get1024 junyeren@outlook.com
+ * @LastEditTime: 2024-04-01 16:33:01
+ * @FilePath: \jy-movie\vue-app\src\views\Active.vue
+-->
 <template>
   <div class="main">
     <el-timeline>
-      <el-timeline-item
-          style="letter-spacing: 2px"
-          v-for="(item, index) in list"
-          :key="index"
-          :timestamp="item.startTime"
-          placement="top">
+      <el-timeline-item style="letter-spacing: 2px" v-for="(item, index) in list" :key="index"
+        :timestamp="item.startTime" placement="top">
         <el-card>
           <h4 class="h1">{{ item.content }}</h4>
           <h4 class="p1">活动结束时间：{{ item.endTime }}</h4>
@@ -18,7 +20,7 @@
 </template>
 
 <script>
-import {ListAllActivity, SubmitActive} from "@/api/active";
+import { ListAllActivity, SubmitActive } from "@/api/active";
 
 export default {
 

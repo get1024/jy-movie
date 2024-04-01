@@ -10,12 +10,8 @@
 
     <div class="film-des">
       <div class="p1">{{ film.name }}
-        <el-rate style="float: right;padding-left: 50px"
-                 v-model="value"
-                 disabled
-                 show-score
-                 text-color="#ff9900"
-                 score-template="{value}">
+        <el-rate style="float: right;padding-left: 50px" v-model="value" disabled show-score text-color="#ff9900"
+          score-template="{value}">
         </el-rate>
       </div>
       <div class="p2">电影类型 : {{ film.type }}</div>
@@ -37,35 +33,24 @@
       <router-view />
     </div>
 
-    <el-dialog
-        :show-close=false
-        title="电影评分"
-        :visible.sync="dialogVisible"
-        width="30%">
+    <el-dialog :show-close=false title="电影评分" :visible.sync="dialogVisible" width="30%">
       <div class="block">
-        <el-rate
-            v-model="form.star"
-            :colors="colors">
+        <el-rate v-model="form.star" :colors="colors">
         </el-rate>
       </div>
-      <el-input
-          style="margin-top: 40px"
-          type="textarea"
-          :rows="8"
-          placeholder="请输入内容"
-          v-model="form.comment">
+      <el-input style="margin-top: 40px" type="textarea" :rows="8" placeholder="请输入内容" v-model="form.comment">
       </el-input>
       <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="submitComment">确 认 提 交</el-button>
-             </span>
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitComment">确 认 提 交</el-button>
+      </span>
     </el-dialog>
 
   </div>
 </template>
 
 <script>
-import {AddFilmEvaluate, FindFilmById, FindFilmEvaluateByFId} from "@/api/film";
+import { AddFilmEvaluate, FindFilmById, FindFilmEvaluateByFId } from "@/api/film";
 
 export default {
   name: "Film",
@@ -74,7 +59,7 @@ export default {
       value2: null,
       colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       filmId: this.$route.query.fid,
-      value: 3.5,
+      value: 4,
       list: [{}, {}, {}],
       dialogVisible: false,
       film: {},
@@ -129,7 +114,6 @@ export default {
 </script>
 
 <style scoped>
-
 .film-header {
   position: relative;
   width: 100%;
@@ -179,13 +163,12 @@ export default {
   z-index: 999;
 }
 
->>> .el-rate__icon {
+>>>.el-rate__icon {
   font-size: 25px;
 }
 
->>> .el-rate__text {
+>>>.el-rate__text {
   padding-left: 8px;
   font-size: 30px;
 }
-
 </style>

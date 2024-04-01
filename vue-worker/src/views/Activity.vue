@@ -1,27 +1,14 @@
 <template>
   <div style="padding: 40px">
     <el-button @click="dialogFormVisible = true" plain>添加影院活动</el-button>
-    <el-table
-        v-loading="loading"
-        :data="list"
-        style="width: 100%;margin-top: 20px">
-      <el-table-column
-          prop="startTime"
-          label="开始时间"
-          width="220">
+    <el-table v-loading="loading" :data="list" style="width: 100%;margin-top: 20px">
+      <el-table-column prop="startTime" label="开始时间" width="220">
       </el-table-column>
-      <el-table-column
-          prop="endTime"
-          label="结束时间"
-          width="220">
+      <el-table-column prop="endTime" label="结束时间" width="220">
       </el-table-column>
-      <el-table-column
-          prop="content"
-          label="活动内容">
+      <el-table-column prop="content" label="活动内容">
       </el-table-column>
-      <el-table-column
-          prop="number"
-          label="参加人数">
+      <el-table-column prop="number" label="参加人数">
       </el-table-column>
       <el-table-column width="150" label="操作">
         <template slot-scope="props">
@@ -33,19 +20,11 @@
     <el-dialog title="新增活动表单" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-form-item style="padding-right: 100px" label="开始日期" label-width="120px">
-          <el-date-picker
-              v-model="form.startTime"
-              type="date"
-              value-format="yyyy-MM-dd"
-              placeholder="开始日期">
+          <el-date-picker v-model="form.startTime" type="date" value-format="yyyy-MM-dd" placeholder="开始日期">
           </el-date-picker>
         </el-form-item>
         <el-form-item style="padding-right: 100px" label="结束日期" label-width="120px">
-          <el-date-picker
-              v-model="form.endTime"
-              type="date"
-              value-format="yyyy-MM-dd"
-              placeholder="结束日期">
+          <el-date-picker v-model="form.endTime" type="date" value-format="yyyy-MM-dd" placeholder="结束日期">
           </el-date-picker>
         </el-form-item>
         <el-form-item style="padding-right: 100px" label="活动内容" label-width="120px">
@@ -62,7 +41,7 @@
 </template>
 
 <script>
-import {CreateActivity, DeleteActivityById, ListAllActivity} from "@/api/activity";
+import { CreateActivity, DeleteActivityById, ListAllActivity } from "@/api/activity";
 
 export default {
 
@@ -151,6 +130,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

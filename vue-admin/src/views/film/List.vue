@@ -1,25 +1,29 @@
 <template>
   <div class="film-list">
-
-    <el-dialog
-        title="电影信息修改"
-        :visible.sync="dialog1"
-        width="60%">
-
-      <el-form ref="form" style="padding: 20px" :model="form" label-width="80px">
-
+    <el-dialog title="电影信息修改" :visible.sync="dialog1" width="60%">
+      <el-form
+        ref="form"
+        style="padding: 20px"
+        :model="form"
+        label-width="80px"
+      >
         <el-form-item label="电影封面">
           <el-upload
-              class="upload-demo"
-              drag
-              accept=".png,.jpg"
-              :headers="header"
-              :action="uploadAction"
-              :on-success="handleUploadSuccess"
-              multiple>
+            class="upload-demo"
+            drag
+            accept=".png,.jpg"
+            :headers="header"
+            :action="uploadAction"
+            :on-success="handleUploadSuccess"
+            multiple
+          >
             <i class="el-icon-upload"></i>
-            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过50mb</div>
+            <div class="el-upload__text">
+              将文件拖到此处，或<em>点击上传</em>
+            </div>
+            <div class="el-upload__tip" slot="tip">
+              只能上传jpg/png文件，且不超过50mb
+            </div>
           </el-upload>
         </el-form-item>
 
@@ -43,12 +47,22 @@
         </el-form-item>
 
         <el-form-item label="全片时长">
-          <el-input-number v-model="form.duration" :min="10" :max="550"></el-input-number>
+          <el-input-number
+            v-model="form.duration"
+            :min="10"
+            :max="550"
+          ></el-input-number>
         </el-form-item>
 
         <el-form-item label="上映时间">
           <el-col :span="11">
-            <el-date-picker type="date" value-format="yyyy年-MM月-dd日" placeholder="选择日期" v-model="form.releaseTime" style="width: 100%;"></el-date-picker>
+            <el-date-picker
+              type="date"
+              value-format="yyyy年-MM月-dd日"
+              placeholder="选择日期"
+              v-model="form.releaseTime"
+              style="width: 100%"
+            ></el-date-picker>
           </el-col>
         </el-form-item>
 
@@ -81,9 +95,12 @@
         </el-form-item>
 
         <el-form-item label="内容简介">
-          <el-input rows="8" type="textarea" v-model="form.introduction"></el-input>
+          <el-input
+            rows="8"
+            type="textarea"
+            v-model="form.introduction"
+          ></el-input>
         </el-form-item>
-
       </el-form>
 
       <span slot="footer" class="dialog-footer">
@@ -92,19 +109,18 @@
       </span>
     </el-dialog>
 
-    <el-dialog
-        title="新增电影排片"
-        :visible.sync="dialog2"
-        width="50%">
-
+    <el-dialog title="新增电影排片" :visible.sync="dialog2" width="50%">
       <el-form ref="form" :model="arrangement" label-width="80px">
-
         <el-form-item label="电影名称">
           <el-input :disabled="true" v-model="arrangement.name"></el-input>
         </el-form-item>
 
         <el-form-item label="开放座位">
-          <el-input-number v-model="arrangement.seatNumber" :min="10" :max="100"></el-input-number>
+          <el-input-number
+            v-model="arrangement.seatNumber"
+            :min="10"
+            :max="100"
+          ></el-input-number>
         </el-form-item>
 
         <el-form-item label="放映类型">
@@ -116,23 +132,43 @@
 
         <el-form-item style="width: 500px" label="放映日期">
           <el-col :span="11">
-            <el-date-picker type="date" placeholder="选择日期" v-model="arrangement.date"
-                            value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+            <el-date-picker
+              type="date"
+              placeholder="选择日期"
+              v-model="arrangement.date"
+              value-format="yyyy-MM-dd"
+              style="width: 100%"
+            ></el-date-picker>
           </el-col>
         </el-form-item>
 
         <el-form-item style="width: 500px" label="放映时间">
           <el-col :span="11">
-            <el-time-picker placeholder="开始时间" value-format="HH:mm:ss" v-model="arrangement.startTime" style="width: 100%;"></el-time-picker>
+            <el-time-picker
+              placeholder="开始时间"
+              value-format="HH:mm:ss"
+              v-model="arrangement.startTime"
+              style="width: 100%"
+            ></el-time-picker>
           </el-col>
           <el-col style="text-align: center" class="line" :span="2">-</el-col>
           <el-col :span="11">
-            <el-time-picker placeholder="结束时间" value-format="HH:mm:ss" v-model="arrangement.endTime" style="width: 100%;"></el-time-picker>
+            <el-time-picker
+              placeholder="结束时间"
+              value-format="HH:mm:ss"
+              v-model="arrangement.endTime"
+              style="width: 100%"
+            ></el-time-picker>
           </el-col>
         </el-form-item>
 
         <el-form-item label="电影票价">
-          <el-input-number v-model="arrangement.price" :precision="2" :step="0.1" :max="999.99"></el-input-number>
+          <el-input-number
+            v-model="arrangement.price"
+            :precision="2"
+            :step="0.1"
+            :max="999.99"
+          ></el-input-number>
         </el-form-item>
 
         <el-form-item label="排片人">
@@ -147,101 +183,107 @@
     </el-dialog>
 
     <el-table
-        v-loading="tableLoading"
-        :data="filmList.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-        style="width: 100%">
-
+      v-loading="tableLoading"
+      :data="
+        filmList.filter(
+          (data) =>
+            !search || data.name.toLowerCase().includes(search.toLowerCase())
+        )
+      "
+      style="width: 100%"
+    >
       <el-table-column label="电影名">
         <template slot-scope="scope">
-          <el-image
-              style="width: 100px; height: 145px"
-              :src="scope.row.cover">
+          <el-image style="width: 100px; height: 145px" :src="scope.row.cover">
           </el-image>
-          <div style="font-size: 10px;padding-top: 5px;padding-left: 3px">{{scope.row.name}}</div>
+          <div style="font-size: 10px; padding-top: 5px; padding-left: 3px">
+            {{ scope.row.name }}
+          </div>
         </template>
       </el-table-column>
 
-      <el-table-column
-          label="上映时间"
-          prop="releaseTime">
-      </el-table-column>
+      <el-table-column label="上映时间" prop="releaseTime"> </el-table-column>
 
-      <el-table-column
-          label="类型"
-          prop="type">
-      </el-table-column>
+      <el-table-column label="类型" prop="type"> </el-table-column>
 
       <el-table-column label="上架状态">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.status === true" type="success" disable-transitions>上架</el-tag>
-          <el-tag v-if="scope.row.status === false" type="warning" disable-transitions>下架</el-tag>
+          <el-tag
+            v-if="scope.row.status === true"
+            type="success"
+            disable-transitions
+            >上架</el-tag
+          >
+          <el-tag
+            v-if="scope.row.status === false"
+            type="warning"
+            disable-transitions
+            >下架</el-tag
+          >
         </template>
       </el-table-column>
 
-      <el-table-column
-          label="地区"
-          prop="region">
-      </el-table-column>
+      <el-table-column label="地区" prop="region"> </el-table-column>
 
       <el-table-column label="电影时长">
         <template slot-scope="scope">
-          <el-tag size="medium" effect="plain">{{ scope.row.duration }} 分钟</el-tag>
+          <el-tag size="medium" effect="plain"
+            >{{ scope.row.duration }} 分钟</el-tag
+          >
         </template>
       </el-table-column>
 
       <el-table-column width="260" align="right">
         <template slot="header" slot-scope="scope">
-          <el-input
-              v-model="search"
-              size="mini"
-              placeholder="输入关键字搜索"/>
+          <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
         </template>
         <template style="white-space: nowrap" slot-scope="scope">
           <el-button
-              size="mini"
-              icon="el-icon-edit"
-              type="primary"
-              @click="handleEdit(scope.$index, scope.row)">修改
+            size="mini"
+            icon="el-icon-edit"
+            type="primary"
+            @click="handleEdit(scope.$index, scope.row)"
+            >修改
           </el-button>
           <el-button
-              size="mini"
-              icon="el-icon-circle-plus"
-              type="success"
-              @click="handleArrange(scope.$index, scope.row)">排片
+            size="mini"
+            icon="el-icon-circle-plus"
+            type="success"
+            @click="handleArrange(scope.$index, scope.row)"
+            >排片
           </el-button>
           <el-popconfirm
-              confirm-button-text='确定'
-              cancel-button-text='不用了'
-              icon="el-icon-info"
-              icon-color="red"
-              @confirm=handleDelete(scope.$index,scope.row)
-              title=" 确定要删除此电影吗？ "
+            confirm-button-text="确定"
+            cancel-button-text="不用了"
+            icon="el-icon-info"
+            icon-color="red"
+            @confirm="handleDelete(scope.$index, scope.row)"
+            title=" 确定要删除此电影吗？ "
           >
             <el-button
-                style="margin-left: 8px"
-                size="mini"
-                icon="el-icon-delete"
-                type="danger"
-                slot="reference">删除
+              style="margin-left: 8px"
+              size="mini"
+              icon="el-icon-delete"
+              type="danger"
+              slot="reference"
+              >删除
             </el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
-
     </el-table>
-
   </div>
 </template>
 
 <script>
-import {ListAllFilm, DeleteById, UpdateFilm, AddArrangement} from "@/api/film";
-import config from "@/config";
+import { ListAllFilm, DeleteById, UpdateFilm, AddArrangement } from '@/api/film'
+import config from '@/config'
 
 export default {
   data() {
     return {
-      header:{
-        "Authorization": localStorage.getItem("token")
+      header: {
+        Authorization: localStorage.getItem('token'),
       },
       uploadAction: config.API_URL + '/upload',
       url: '',
@@ -260,7 +302,7 @@ export default {
         name: '',
         fid: '',
         seatNumber: 48,
-        price: 30.50,
+        price: 30.5,
         date: '',
         startTime: '',
         endTime: '',
@@ -275,55 +317,53 @@ export default {
   },
 
   mounted() {
-    this.tableLoading = true;
-    ListAllFilm().then(res=>{
-      setTimeout(()=>{
-        this.filmList = res.data;
-        this.tableLoading = false;
-      },700)
+    this.tableLoading = true
+    ListAllFilm().then((res) => {
+      setTimeout(() => {
+        this.filmList = res.data
+        this.tableLoading = false
+      }, 700)
     })
   },
 
   methods: {
-
     submitUpdate() {
-      this.form.cover = this.url;
-      UpdateFilm(this.form).then(res=>{
-        this.dialog1 = false;
+      this.form.cover = this.url
+      UpdateFilm(this.form).then((res) => {
+        this.dialog1 = false
       })
     },
 
     submitArrange() {
-      AddArrangement(this.arrangement).then(res=>{
-        this.dialog2 = false;
+      AddArrangement(this.arrangement).then((res) => {
+        this.dialog2 = false
       })
     },
 
     handleEdit(index, row) {
-      this.dialog1 = true;
-      this.form = row;
+      this.dialog1 = true
+      this.form = row
     },
 
     handleArrange(index, row) {
-      this.dialog2 = true;
+      this.dialog2 = true
       this.arrangement.name = row.name
       this.arrangement.fid = row.id
     },
 
     handleDelete(index, row) {
-      DeleteById(row.id).then(res=>{
+      DeleteById(row.id).then((res) => {
         this.filmList.splice(index, 1)
         this.$message({
           message: '电影《' + row.name + '》删除成功！',
-          type: 'success'
-        });
+          type: 'success',
+        })
       })
     },
 
-    handleUploadSuccess(res){
-      this.url = res;
+    handleUploadSuccess(res) {
+      this.url = res
     },
-
   },
 }
 </script>
