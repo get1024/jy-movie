@@ -4,7 +4,7 @@
       <div class="login-form-header">
         <img style="width: 75px; height: 75px;float: left;padding-right: 40px;" src="../assets/img/logo.png"
              alt=""/>
-        <div class="login-form-text">小小电影 - 注册</div>
+        <div class="login-form-text">JY影院 - 注册</div>
       </div>
       <div style="color: #91949c;font-weight: bolder">
         <p>Username</p>
@@ -15,7 +15,7 @@
         <el-input class="login-form-input" placeholder="确 认 密 码" v-model="checkPassword"
                   show-password></el-input>
         <div style="padding-top: 10px">
-          <el-checkbox v-model="agree">我已同意"小小电影"用户注册协议!</el-checkbox>
+          <el-checkbox v-model="agree">我已同意"JY影院"用户注册协议!</el-checkbox>
         </div>
         <el-button @click="postLogin" class="login-form-button" type="primary">SIGN UP</el-button>
       </div>
@@ -54,7 +54,7 @@ export default {
       }
       if (this.agree === false) {
         this.$message({
-          message: '请勾选 我已同意"小小电影"用户注册协议!',
+          message: '请勾选 我已同意"JY影院"用户注册协议!',
           type: 'warning'
         });
         return

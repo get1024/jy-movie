@@ -171,7 +171,7 @@ export default {
         if (res.success) {
           this.dialogFormVisible2 = false
           this.$message({
-            message: '感谢您对小小电影留下的宝贵意见',
+            message: '感谢您对JY影院留下的宝贵意见',
             type: 'success'
           });
         }
