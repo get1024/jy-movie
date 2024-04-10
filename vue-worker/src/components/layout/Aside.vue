@@ -1,16 +1,12 @@
 <template>
   <div class="aside">
     <div class="aside-header" style="padding-top: 30px">
-      <img style="width: 40px; height: 40px;float: left" src="../../assets/img/logo.png" alt=""/>
+      <img style="width: 40px; height: 40px;float: left" src="../../assets/img/logo.png" alt="" />
       <div style="padding-left: 15px;padding-top: 8px;float: left">JY影院 - 客服</div>
     </div>
     <div>
       <el-col style="padding-top: 30px">
-        <el-menu
-            class="menu"
-            background-color="#242930"
-            text-color="#FFFFFF"
-            active-text-color="#409EFF">
+        <el-menu class="menu" background-color="#242930" text-color="#FFFFFF" active-text-color="#409EFF">
 
           <router-link to="/leaving">
             <el-menu-item style="padding-left: 65px" index="1">
@@ -47,12 +43,12 @@
             </el-menu-item>
           </router-link>
 
-          <router-link to="/setting">
+          <!-- <router-link to="/setting">
             <el-menu-item style="padding-left: 65px" index="6">
               <i class="el-icon-setting"></i>
               <span slot="title">个人设置</span>
             </el-menu-item>
-          </router-link>
+          </router-link> -->
 
         </el-menu>
       </el-col>
@@ -88,5 +84,4 @@ export default {
   font-weight: bold;
   font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
 }
-
 </style>

@@ -111,7 +111,7 @@ export default {
                     }, 700)
                 } else {
                     setTimeout(() => {
-                        //登陆成功
+                        //登录成功
                         console.log(res.data)
                         localStorage.setItem("token", res.data.token)
                         if (this.role === 'worker') {

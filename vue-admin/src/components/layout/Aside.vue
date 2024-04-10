@@ -1,16 +1,18 @@
+<!--
+ * @Date: 2024-03-26 10:23:31
+ * @LastEditors: get1024 junyeren@outlook.com
+ * @LastEditTime: 2024-04-10 15:58:29
+ * @FilePath: \jy-movie\vue-admin\src\components\layout\Aside.vue
+-->
 <template>
   <div class="aside">
     <div class="aside-header" style="padding-top: 30px">
-      <img style="width: 40px; height: 40px;float: left" src="../../assets/img/logo.png" alt=""/>
+      <img style="width: 40px; height: 40px;float: left" src="../../assets/img/logo.png" alt="" />
       <div style="padding-left: 15px;padding-top: 8px;float: left">后台管理</div>
     </div>
     <div>
       <el-col style="padding-top: 30px">
-        <el-menu
-            class="menu"
-            background-color="#242930"
-            text-color="#FFFFFF"
-            active-text-color="#409EFF">
+        <el-menu class="menu" background-color="#242930" text-color="#FFFFFF" active-text-color="#409EFF">
 
           <el-submenu index="2">
             <template slot="title">
@@ -78,19 +80,21 @@
             </el-menu-item-group>
           </el-submenu>
 
-          <router-link to="/api">
+          <!-- <router-link to="/api">
             <el-menu-item index="4">
               <i class="el-icon-document"></i>
               <span slot="title">Api接口</span>
             </el-menu-item>
-          </router-link>
+          </router-link> -->
 
-          <router-link v-if="role==='worker'" to="/setting">
+          <!-- admin上upload对应的api没有实现对应的功能 -->
+          <!-- 所以这一部分也完全没必要实现 -->
+          <!-- <router-link v-if="role === 'worker'" to="/setting">
             <el-menu-item index="7">
               <i class="el-icon-setting"></i>
               <span slot="title">个人设置</span>
             </el-menu-item>
-          </router-link>
+          </router-link> -->
 
         </el-menu>
       </el-col>
@@ -128,5 +132,4 @@ export default {
   font-weight: bold;
   font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
 }
-
 </style>
