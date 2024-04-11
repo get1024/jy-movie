@@ -29,7 +29,11 @@
             <i style="font-size: 18px" class="el-icon-bell"></i>
           </el-badge>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item v-for="(item, index) in list" :key="index">{{ item.content }}</el-dropdown-item>
+            <el-dropdown-item v-for="(item, index) in list" :key="index">{{'任务：'+ item.content +'，重要等级：'}}
+              <span v-if="item.type === 1" style="color: #55ff2b;font-weight: bold;">普通</span>
+              <span v-else-if="item.type === 2" style="color: #ffa500; font-weight: bold;">重要</span>
+              <span v-else-if="item.type === 3" style="color: #ff1100;font-weight: bold;">非常重要</span>
+            </el-dropdown-item>
             <el-dropdown-item v-if="list.length === 0">今日工作还没有上传</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
