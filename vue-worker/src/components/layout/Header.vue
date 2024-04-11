@@ -23,12 +23,14 @@
       </div>
 
       <div class="header-icon" style="padding-top: 16px">
-        <el-dropdown>
+        <el-dropdown @command="handleCommand">
           <el-badge :value="list.length" class="item">
             <i style="font-size: 18px" class="el-icon-bell"></i>
           </el-badge>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item v-for="item in list" :key="item">{{ item.content }}</el-dropdown-item>
+            <el-dropdown-item v-for="(item, index) in list" :key="index" :command="item"
+              @command="handleCommand(item, index)">{{
+              item.content }}</el-dropdown-item>
             <el-dropdown-item v-if="list.length === 0">还没有安排今日工作</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -43,7 +45,7 @@
 </template>
 
 <script>
-import { FindWorkerById, ListDailyWork } from "@/api/worker";
+import { FindWorkerById, DeleteDailyWork, ListDailyWork } from "@/api/worker";
 
 export default {
   name: "Header",
@@ -66,18 +68,34 @@ export default {
     FindWorkerById(localStorage.getItem("wid")).then(res => {
       this.worker = res.data;
     }),
-      ListDailyWork().then(res => {
-        setTimeout(() => {
-          this.list = res.data
-        }, 700)
-      })
+      this.loadList();
   },
 
   methods: {
+    loadList() {
+      this.loading = true;
+      ListDailyWork().then(res => {
+        setTimeout(() => {
+          this.list = res.data
+          this.loading = false
+        }, 700)
+      })
+    },
     handleLogout() {
       localStorage.removeItem("wid")
       localStorage.removeItem("token")
       this.$router.push('/login')
+    },
+    handleCommand(command, index) {
+      console.log(command);
+      DeleteDailyWork(command.id).then(res => {
+        this.list.splice(index, 1)
+        this.loadList()
+        this.$message({
+          type: 'success',
+          message: command.content + ' 已被 ' + this.worker.nickname + ' 处理，已从每日任务删除记录！',
+        });
+      })
     }
   }
 

@@ -29,7 +29,7 @@
             <i style="font-size: 18px" class="el-icon-bell"></i>
           </el-badge>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item v-for="item in list" :key="item">{{ item.content }}</el-dropdown-item>
+            <el-dropdown-item v-for="(item, index) in list" :key="index">{{ item.content }}</el-dropdown-item>
             <el-dropdown-item v-if="list.length === 0">今日工作还没有上传</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>

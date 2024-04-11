@@ -93,7 +93,7 @@
                   <div class="movie-item">
                     <div class="movie-poster">
                       <img class="poster-default" alt="" :src="item.cover">
-                      <img class="movie-poster-img" alt="不要先生与好的女士海报封面" :src="item.cover">
+                      <img class="movie-poster-img" alt="海报封面" :src="item.cover">
                       <div class="movie-overlay movie-overlay-bg">
                         <div class="movie-info">
                           <div class="movie-title" title="">{{ item.name }}</div>
