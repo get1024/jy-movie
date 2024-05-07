@@ -62,3 +62,6 @@
 # <span id="head15"> 🙌🏼六、结尾碎碎念</span>
 - Ok👌🏼，期待大家 `fork`。
 - 个人联系方式 [personal home](https://barry-maverick-ren.notion.site/Personal-Home-38a5d924805a4afe866e2509e672fa6e?pvs=4)，有兴趣可以联系讨论交流。
+
+---
+[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=get1024&count_private=true&show_icons=true)]( https://github.com/anuraghazra/github-readme-stats )
