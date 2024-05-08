@@ -67,4 +67,4 @@
 - 个人联系方式 [personal home](https://barry-maverick-ren.notion.site/Personal-Home-38a5d924805a4afe866e2509e672fa6e?pvs=4)，有兴趣可以联系讨论交流。
 
 ---
-[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=get1024&count_private=true&show_icons=true)]( https://github.com/anuraghazra/github-readme-stats )
+<div align="center"><img src="https://github-readme-stats-beta-amber-44.vercel.app/api?username=get1024&show_icons=true&role=OWNER,ORGANIZATION_MEMBER,COLLABORATOR&locale=zh-my" align="right" /></div>
