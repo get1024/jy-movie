@@ -67,4 +67,4 @@
 - 个人联系方式 [personal home](https://barry-maverick-ren.notion.site/Personal-Home-38a5d924805a4afe866e2509e672fa6e?pvs=4)，有兴趣可以联系讨论交流。
 
 ---
-<div align="center"><img src="https://github-readme-stats.vercel.app/api?username=get1024&show_icons=true&role=OWNER,ORGANIZATION_MEMBER,COLLABORATOR&locale=cn&theme=radical&hide_border=true&show_owner=true"/></div>
+<div align="center"><img src="https://github-readme-stats.vercel.app/api?username=get1024&show_icons=true&role=OWNER,ORGANIZATION_MEMBER,COLLABORATOR&theme=radical&hide_border=true&show_owner=true"/></div>
