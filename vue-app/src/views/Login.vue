@@ -21,7 +21,7 @@
                         </el-tooltip>
                     </div>
                 </div>
-                <el-button @click="postLogin" class="login-form-button" type="primary">SIGN IN</el-button>
+                <el-button :loading="loading" @click="postLogin" class="login-form-button" type="primary">SIGN IN</el-button>
             </div>
             <div class="login-form-footer">
                 <el-link href="/register" style="font-weight: bolder;font-size: 16px;color: #91949c;"
@@ -44,21 +44,34 @@ export default {
             username: 'userRJY',
             password: '123456',
             remember: false,
+            loading: false,
+            loginActive: true,
         }
     },
+    beforeDestroy() {
+        this.loginActive = false
+        this.loading = false
+    },
     methods: {
-        postLogin() {
-            const LoginData = {
-                username: this.username,
-                password: this.password,
-                remember: this.remember
-            };
-            console.log(LoginData);
-            Login(LoginData).then(res => {
-                localStorage.setItem("uid", res.data.user.id);
-                localStorage.setItem("token", res.data.token);
-                this.$router.push({ path: '/', replace: true })
-            })
+        async postLogin() {
+            if (!this.loginActive || this.loading) return
+            if (!this.username.trim() || !this.password) {
+                this.$message({ type: 'warning', message: '请输入用户名和密码' })
+                return
+            }
+            this.loading = true
+            const loginData = { username: this.username, password: this.password, remember: this.remember }
+            try {
+                const res = await Login(loginData)
+                if (!this.loginActive || !res.success || !res.data || !res.data.user || !res.data.token) return
+                localStorage.setItem('uid', res.data.user.id)
+                localStorage.setItem('token', res.data.token)
+                await this.$router.push({ path: '/', replace: true })
+            } catch (error) {
+                // The request interceptor reports transport errors; allow another attempt.
+            } finally {
+                if (this.loginActive) this.loading = false
+            }
         }
     }
 }

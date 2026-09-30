@@ -142,14 +142,16 @@ export default {
 
   methods: {
 
-    load() {
-      this.loading = true;
-      FindAllArrangement().then(res => {
-        setTimeout(() => {
-          this.loading = false;
-          this.List = res.data
-        }, 700)
-      })
+    async load() {
+      this.loading = true
+      try {
+        const res = await FindAllArrangement()
+        if (res.success) this.List = Array.isArray(res.data) ? res.data : []
+      } catch (error) {
+        // The request interceptor reports transport errors.
+      } finally {
+        this.loading = false
+      }
     },
 
 

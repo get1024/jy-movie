@@ -1,3 +1,21 @@
+# Dependencies and generated build output
 **/node_modules/
+**/dist/
+**/target/
+**/coverage/
+*.log
 
-package-lock.json
+# Local IDE / operating system files
+**/.idea/
+**/.vscode/
+*.iml
+.DS_Store
+
+# Local configuration and secrets (examples are safe to commit)
+.env
+.env.*
+!.env.example
+!**/.env.example
+**/application-local.yml
+
+# Commit package-lock.json so npm ci is reproducible.

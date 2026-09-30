@@ -4,6 +4,10 @@ import com.movie.api.constant.Roles;
 import com.movie.api.model.dto.LoginDto;
 import com.movie.api.model.entity.Role;
 import com.movie.api.model.entity.Worker;
+import com.movie.api.model.vo.WorkerSummary;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.stream.Collectors;
 import com.movie.api.service.RoleService;
 import com.movie.api.service.WorkerService;
 import com.movie.api.utils.JwtTokenUtil;
@@ -57,8 +61,14 @@ public class WorkerController {
 
     @GetMapping("")
     @ApiOperation("查询全部员工")
-    public List<Worker> list(){
-        return workerService.findAll();
+    public List<?> list(){
+        List<Worker> workers = workerService.findAll();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean staff = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(authority -> Roles.ROLE_ADMIN.equals(authority.getAuthority())
+                        || Roles.ROLE_WORKER.equals(authority.getAuthority()));
+        if (staff) return workers;
+        return workers.stream().map(WorkerSummary::new).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")

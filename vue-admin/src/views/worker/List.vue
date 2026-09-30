@@ -232,15 +232,17 @@ export default {
       })
     },
 
-    handleListRole(worker) {
-      this.roleDialogVisible = true;
-      this.loading = true;
-      FindWorkerRoles(worker.id).then(res => {
-        setTimeout(() => {
-          this.roleList = res.data
-          this.loading = false;
-        }, 700)
-      })
+    async handleListRole(worker) {
+      this.roleDialogVisible = true
+      this.loading = true
+      try {
+        const res = await FindWorkerRoles(worker.id)
+        if (res.success) this.roleList = Array.isArray(res.data) ? res.data : []
+      } catch (error) {
+        // The request interceptor reports transport errors.
+      } finally {
+        this.loading = false
+      }
     },
 
     handleDeleteRole(index, id) {

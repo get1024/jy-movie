@@ -68,8 +68,8 @@
         </el-form-item>
         <el-form-item label="活动区域" label-width="120px">
           <el-select v-model="form.status" placeholder="请选择处理状态">
-            <el-option label="处理完成" value="true"></el-option>
-            <el-option label="还未完成" value="false"></el-option>
+            <el-option label="处理完成" :value="true"></el-option>
+            <el-option label="还未完成" :value="false"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -105,23 +105,21 @@ export default {
 
   methods: {
 
-    loadList() {
+    async loadList() {
       this.loading = true
-      ListOrderException().then(res => {
-        if (res.success) {
-          setTimeout(() => {
-            this.list = res.data
-            this.loading = false
-          }, 700)
-        }
-      })
+      try {
+        const res = await ListOrderException()
+        if (res.success) this.list = Array.isArray(res.data) ? res.data : []
+      } catch (error) {
+        // The request interceptor reports transport errors.
+      } finally {
+        this.loading = false
+      }
     },
 
     handle(index) {
       this.dialogFormVisible = true
-      this.list[index].status = this.form.status
-      this.list[index].result = this.form.result
-      this.form = this.list[index]
+      this.form = { ...this.list[index] }
     },
 
     submit() {

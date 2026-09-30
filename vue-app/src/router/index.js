@@ -6,8 +6,6 @@
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Layout from '@/components/layout/Layout'
-import Me from '@/views/me/Index'
 
 Vue.use(VueRouter)
 
@@ -27,7 +25,7 @@ const routes = [
   //公共布局下的路由
   {
     path: '/',
-    component: Layout,
+    component: () => import('@/components/layout/Layout'),
     children: [
       {
         path: '',
@@ -65,7 +63,7 @@ const routes = [
       },
       {
         path: '/me',
-        component: Me,
+        component: () => import('@/views/me/Index'),
         children: [
           {
             path: 'cart',

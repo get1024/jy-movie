@@ -68,7 +68,8 @@ export default {
       isLogin: false,
       searchList: [],
       state: '',
-      timeout: null,
+      searchRequestId: 0,
+      searchActive: true,
       user: {},
     }
   },
@@ -76,22 +77,38 @@ export default {
   mounted() {
     if (localStorage.getItem("uid") !== null) {
       findById(localStorage.getItem("uid")).then(res => {
-        this.isLogin = true;
-        this.user = res.data;
-      })
+        if (!this.searchActive || !res.success) return
+        this.isLogin = true
+        this.user = res.data
+      }).catch(() => {})
     }
+  },
+
+  beforeDestroy() {
+    this.searchActive = false
+    this.searchRequestId += 1
   },
 
   methods: {
 
-    querySearchAsync(queryString, cb) {
-      if (queryString) {
-        SearchFilm(queryString).then(res => {
-          setTimeout(() => {
-            this.searchList = res.data
-            cb(this.loadSearchList())
-          }, 600)
-        })
+    async querySearchAsync(queryString, cb) {
+      const requestId = ++this.searchRequestId
+      const query = queryString.trim()
+      if (!query) {
+        this.searchList = []
+        cb([])
+        return
+      }
+      try {
+        const res = await SearchFilm(query)
+        // A newer query (including clearing the input) owns the suggestions now.
+        if (!this.searchActive || requestId !== this.searchRequestId) return
+        this.searchList = res.success && Array.isArray(res.data) ? res.data : []
+        cb(this.loadSearchList())
+      } catch (error) {
+        if (!this.searchActive || requestId !== this.searchRequestId) return
+        this.searchList = []
+        cb([])
       }
     },
 

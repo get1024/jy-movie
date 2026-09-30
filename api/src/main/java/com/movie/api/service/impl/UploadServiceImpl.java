@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.UUID;
 
 @Service
@@ -22,10 +21,9 @@ public class UploadServiceImpl implements UploadService {
     @Override
     public String checkAndSaveUpload(MultipartFile file) {
         try {
-            InputStream is = file.getInputStream();
-            byte[] data = new byte[(int) file.getSize()];
-            int i = is.read(data);
-            System.out.println("上传的文件大小=" + i);
+            // A single InputStream.read is not guaranteed to fill the buffer.
+            // MultipartFile owns the stream lifecycle and reads the entire file.
+            byte[] data = file.getBytes();
             String md5 = DigestUtils.md5DigestAsHex(data);
 
             //判断是否有相同md5值的文件
@@ -39,9 +37,8 @@ public class UploadServiceImpl implements UploadService {
             uploadMapper.insert(new Upload(id, data, md5));
             return id;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalStateException("无法读取上传文件，请重试", e);
         }
-        return null;
     }
 
     @Override

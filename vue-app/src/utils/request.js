@@ -1,42 +1,22 @@
-import request from "axios"
-import config from "@/config"
-import {Notification} from 'element-ui'
+import axios from 'axios'
+import { Notification } from 'element-ui'
+import config from '@/config'
+import router from '@/router'
+import createHttpClient from './http-client.cjs'
 
-const uid = localStorage.getItem('uid');
-const token = localStorage.getItem('token');
+function redirect(path) {
+  if (router.currentRoute.path !== path) {
+    // Concurrent failed requests may request the same navigation.
+    router.replace(path).catch(() => {})
+  }
+}
 
-const service = request.create({
-    baseURL: config.API_URL,
-    headers: {
-        "Authorization": token
-    }
-});
-
-service.interceptors.response.use(
-    response => {
-        const res = response.data;
-        if (res.success === true) {
-            if (res.msg !== null) {
-                Notification.success({
-                    title: 'Success ',
-                    message: res.msg,
-                    type: 'success'
-                });
-            }
-
-        } else {
-            Notification.error({
-                title: '错误提示: ' + res.code,
-                message: res.msg
-            });
-        }
-        return res
-    },
-
-    error => {
-        console.log('err' + error);
-        return Promise.reject(error)
-    }
-);
-
-export default service
+export default createHttpClient(axios, {
+  baseURL: config.API_URL,
+  storage: localStorage,
+  notify: Notification,
+  onUnauthorized: () => {
+    ;['token', 'uid', 'wid', 'role'].forEach(key => localStorage.removeItem(key))
+    redirect('/login')
+  },
+})

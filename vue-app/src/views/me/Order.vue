@@ -5,20 +5,21 @@
     <div v-loading="loading">
       <el-card v-for="(item, index) in orderList" :key="index" class="box-card">
         <div>
-          <img class="item-film-img" alt="" :src="item.film.cover"/>
+          <img v-if="item.film" class="item-film-img" alt="" :src="item.film.cover"/>
           <div style="float: left;">
-            <div class="item-film-name">《{{ item.film.name }}》</div>
+            <div class="item-film-name">《{{ item.film ? item.film.name : '电影已下架' }}》</div>
             <div class="item-film-seat">订购座位 : {{ item.order.seats }}</div>
             <div class="item-film-time">下单时间 : {{ item.order.createAt }}</div>
             <div v-if="item.order.status === 2" class="item-film-time">支付时间 : {{ item.order.payAt }}</div>
           </div>
           <el-button type="text"
                      @click="handlePay(item.order, index)"
-                     v-if="item.order.status === 0"
+                     v-if="item.order.status === 0 && item.arrangement"
                      style="line-height: 75px"
                      class="o1">
             等待支付
           </el-button>
+          <div v-if="item.order.status === 0 && !item.arrangement" class="o1">场次已删除，请联系客服</div>
           <el-tooltip class="item" effect="dark" content="请联系工作人员查询您的订单" placement="top">
             <div v-if="item.order.status === 3" style="color: #E6A23C" class="o1">订单异常</div>
           </el-tooltip>
@@ -30,16 +31,16 @@
     </div>
 
     <el-dialog
-        title="扫码支付"
-        :show-close="false"
+        title="模拟支付（演示）"
+        :show-close="!paying"
+        :close-on-click-modal="!paying"
+        :close-on-press-escape="!paying"
         width="30%"
         :visible.sync="centerDialogVisible"
     >
-      <div>
-        <img class="c-img" src="../../assets/img/c.jpeg" alt="">
-      </div>
+      <el-alert title="当前为演示支付，不会发生真实扣款，也不会验证到账" type="warning" :closable="false" show-icon />
       <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="submitPay">支 付 成 功</el-button>
+    <el-button type="primary" :loading="paying" @click="submitPay">确认模拟支付</el-button>
   </span>
     </el-dialog>
 
@@ -58,6 +59,7 @@ export default {
       loading: false,
       orderList: [],
       payOrderId: '',
+      paying: false,
     }
   },
 
@@ -67,14 +69,16 @@ export default {
 
   methods: {
 
-    loadOrder() {
+    async loadOrder() {
       this.loading = true
-      FindOrderByUser(localStorage.getItem("uid")).then(res => {
-        setTimeout(() => {
-          this.orderList = res.data
-          this.loading = false
-        }, 700)
-      })
+      try {
+        const res = await FindOrderByUser(localStorage.getItem("uid"))
+        if (res.success) this.orderList = Array.isArray(res.data) ? res.data : []
+      } catch (error) {
+        // The request interceptor reports transport errors.
+      } finally {
+        this.loading = false
+      }
     },
 
     handlePay(order, index) {
@@ -82,13 +86,12 @@ export default {
     },
 
     open(order, index) {
-      this.$confirm('请您仔细确认订单金额为' + order.price + '元, 是否继续?', '提示', {
-        confirmButtonText: '确认支付',
+      this.$confirm('请确认订单金额为 ' + order.price + ' 元（演示支付，不会真实扣款）', '提示', {
+        confirmButtonText: '模拟支付',
         cancelButtonText: '取消支付',
         type: 'success',
         center: true
       }).then(() => {
-        this.loading = true
         this.centerDialogVisible = true
         this.payOrderId = order.id
       }).catch(() => {
@@ -99,17 +102,20 @@ export default {
       });
     },
 
-    submitPay() {
-      PayForOrder(this.payOrderId).then(res => {
-        this.loadOrder();
+    async submitPay() {
+      if (this.paying || !this.payOrderId) return
+      this.paying = true
+      try {
+        const res = await PayForOrder(this.payOrderId)
+        if (!res.success) return
         this.centerDialogVisible = false
-        if (res.success) {
-          this.$message({
-            type: 'success',
-            message: '恭喜你支付成功!'
-          });
-        }
-      })
+        this.$message({ type: 'success', message: '模拟支付成功' })
+        await this.loadOrder()
+      } catch (error) {
+        // Keep the dialog available for retry.
+      } finally {
+        this.paying = false
+      }
     },
 
   },

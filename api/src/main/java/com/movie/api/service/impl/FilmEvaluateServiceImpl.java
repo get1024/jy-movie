@@ -6,15 +6,20 @@ import com.movie.api.mapper.FilmMapper;
 import com.movie.api.mapper.UserMapper;
 import com.movie.api.model.entity.Film;
 import com.movie.api.model.entity.FilmEvaluate;
+import com.movie.api.model.entity.User;
 import com.movie.api.model.vo.FilmEvaluateVO;
 import com.movie.api.service.FilmEvaluateService;
 import com.movie.api.utils.DataTimeUtil;
+import com.movie.api.utils.BatchLookup;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @CacheConfig(cacheNames = "filmEvaluate")
@@ -30,6 +35,7 @@ public class FilmEvaluateServiceImpl implements FilmEvaluateService {
     private UserMapper userMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void save(FilmEvaluate filmEvaluate) throws Exception {
         QueryWrapper<FilmEvaluate> wrapper = new QueryWrapper<>();
         wrapper.in("fid", filmEvaluate.getFid());
@@ -41,18 +47,18 @@ public class FilmEvaluateServiceImpl implements FilmEvaluateService {
         filmEvaluate.setCreateAt(DataTimeUtil.getNowTimeString());
         filmEvaluateMapper.insert(filmEvaluate);
         //为电影添加热度
-        Film film = filmMapper.selectById(filmEvaluate.getFid());
-        film.setHot(film.getHot() + 1);
-        filmMapper.updateById(film);
+        filmMapper.incrementHot(filmEvaluate.getFid(), 1);
     }
 
     @Override
     public List<FilmEvaluateVO> findAllByFilmId(String fid) {
         List<FilmEvaluateVO> result = new ArrayList<>();
         List<FilmEvaluate> filmEvaluates = filmEvaluateMapper.selectList(new QueryWrapper<FilmEvaluate>().in("fid", fid));
+        Map<String, User> users = BatchLookup.byId(
+                filmEvaluates.stream().map(FilmEvaluate::getUid).collect(Collectors.toList()), userMapper, User::getId);
         for (FilmEvaluate f : filmEvaluates) {
             FilmEvaluateVO filmEvaluateVO = new FilmEvaluateVO();
-            filmEvaluateVO.setUser(userMapper.selectById(f.getUid()));
+            filmEvaluateVO.setUser(users.get(f.getUid()));
             filmEvaluateVO.setFilmEvaluate(f);
             filmEvaluateVO.setId(f.getId());
             result.add(filmEvaluateVO);

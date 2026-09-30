@@ -71,7 +71,6 @@ export default {
         password: this.password,
         remember: this.remember
       };
-      console.log(LoginData);
       Register(LoginData).then(res => {
         if (res.success) {
           this.$router.push("/login")

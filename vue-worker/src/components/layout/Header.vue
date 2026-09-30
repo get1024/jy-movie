@@ -28,13 +28,13 @@
             <i style="font-size: 18px" class="el-icon-bell"></i>
           </el-badge>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item v-for="(item, index) in list" :key="index" :command="item"
-              @command="handleCommand(item, index)">{{ '任务：' + item.content + '，重要等级：' }}
+            <el-dropdown-item v-for="item in list" :key="item.id" :command="item"
+              :disabled="processingIds.includes(item.id)">{{ '任务：' + item.content + '，重要等级：' }}
               <span v-if="item.type === 1" style="color: #55ff2b;font-weight: bold;">普通</span>
               <span v-else-if="item.type === 2" style="color: #ffa500; font-weight: bold;">重要</span>
               <span v-else-if="item.type === 3" style="color: #ff1100;font-weight: bold;">非常重要</span>
             </el-dropdown-item>
-            <el-dropdown-item v-if="list.length === 0">还没有安排今日工作</el-dropdown-item>
+            <el-dropdown-item v-if="list.length === 0" disabled>还没有安排今日工作</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -63,42 +63,53 @@ export default {
         avatar: '',
         department: '',
       },
-      list: []
+      list: [],
+      loading: false,
+      processingIds: []
     }
   },
 
   mounted() {
     FindWorkerById(localStorage.getItem("wid")).then(res => {
       this.worker = res.data;
-    }),
-      this.loadList();
+    }).catch(() => {})
+    this.loadList()
   },
 
   methods: {
-    loadList() {
-      this.loading = true;
-      ListDailyWork().then(res => {
-        setTimeout(() => {
-          this.list = res.data
-          this.loading = false
-        }, 700)
-      })
+    async loadList() {
+      this.loading = true
+      try {
+        const res = await ListDailyWork()
+        if (res.success) this.list = Array.isArray(res.data) ? res.data : []
+      } catch (error) {
+        // The request interceptor reports errors.
+      } finally {
+        this.loading = false
+      }
     },
     handleLogout() {
       localStorage.removeItem("wid")
       localStorage.removeItem("token")
       this.$router.push('/login')
     },
-    handleCommand(command, index) {
-      console.log(command);
-      DeleteDailyWork(command.id).then(res => {
-        this.list.splice(index, 1)
-        this.loadList()
+    async handleCommand(command) {
+      if (!command || !command.id || this.processingIds.includes(command.id)) return
+      this.processingIds.push(command.id)
+      try {
+        const res = await DeleteDailyWork(command.id)
+        if (!res.success) return
+        // Element UI emits the command only, not the item's index.
+        this.list = this.list.filter(item => item.id !== command.id)
         this.$message({
           type: 'success',
           message: command.content + ' 已被 ' + this.worker.nickname + ' 处理，已从每日任务删除记录！',
-        });
-      })
+        })
+      } catch (error) {
+        // A failed deletion leaves the task available for retry.
+      } finally {
+        this.processingIds = this.processingIds.filter(id => id !== command.id)
+      }
     }
   }
 

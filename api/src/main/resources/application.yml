@@ -1,23 +1,29 @@
 server:
-  port: 8888
+  port: ${SERVER_PORT:8888}
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/数据库名称?characterEncoding=utf8&serverTimezone=UTC
-    username: root
-    password: 数据库密码
+    url: ${DB_URL:jdbc:mysql://localhost:3306/movie?characterEncoding=utf8&serverTimezone=UTC}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   servlet:
     multipart:
-      max-file-size: 251658240
+      max-file-size: ${MAX_UPLOAD_FILE_SIZE:20MB}
+      max-request-size: ${MAX_UPLOAD_REQUEST_SIZE:21MB}
   cache:
     redis:
-      #使用前缀
       use-key-prefix: true
-      #redis过期时间
       time-to-live: 60s
+jwt:
+  # Required. Use a randomly generated secret with at least 32 UTF-8 bytes.
+  secret: ${JWT_SECRET}
 mybatis-plus:
   global-config:
     db-config:
       id-type: uuid
-      #schema: classpath:/sql/schema.sql
   type-aliases-package: com.movie.api.model.entity
+app:
+  public-url: ${APP_PUBLIC_URL:}

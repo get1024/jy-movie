@@ -89,14 +89,16 @@ export default {
 
   methods: {
 
-    loadList() {
-      this.loading = true;
-      ListAllActivity().then(res => {
-        setTimeout(() => {
-          this.list = res.data
-          this.loading = false
-        }, 700)
-      })
+    async loadList() {
+      this.loading = true
+      try {
+        const res = await ListAllActivity()
+        if (res.success) this.list = Array.isArray(res.data) ? res.data : []
+      } catch (error) {
+        // The request interceptor reports transport errors.
+      } finally {
+        this.loading = false
+      }
     },
 
     submitActivity() {

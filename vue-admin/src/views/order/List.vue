@@ -12,16 +12,16 @@
               <span>{{ props.row.order.id }}</span>
             </el-form-item>
             <el-form-item label="用户ID：">
-              <span>{{ props.row.user.id }}</span>
+              <span>{{ props.row.user ? props.row.user.id : props.row.order.uid }}</span>
             </el-form-item>
             <el-form-item label="电影ID：">
-              <span>{{ props.row.film.id }}</span>
+              <span>{{ props.row.film ? props.row.film.id : '电影已下架' }}</span>
             </el-form-item>
             <el-form-item label="场次ID：">
-              <span>{{ props.row.arrangement.id }}</span>
+              <span>{{ props.row.arrangement ? props.row.arrangement.id : props.row.order.aid }}</span>
             </el-form-item>
             <el-form-item label="电影名：">
-              <span>《 {{ props.row.film.name }} 》</span>
+              <span>《 {{ props.row.film ? props.row.film.name : '电影已下架' }} 》</span>
             </el-form-item>
             <el-form-item label="座位号：">
               <span>{{ props.row.order.seats }}</span>
@@ -113,16 +113,16 @@ export default {
 
   methods: {
 
-    loadOrderList() {
+    async loadOrderList() {
       this.loading = true
-      FindAllOrder().then(res => {
-        if (res.success) {
-          setTimeout(() => {
-            this.orders = res.data
-            this.loading = false
-          }, 700)
-        }
-      })
+      try {
+        const res = await FindAllOrder()
+        if (res.success) this.orders = Array.isArray(res.data) ? res.data : []
+      } catch (error) {
+        // The request interceptor reports transport errors.
+      } finally {
+        this.loading = false
+      }
     },
 
     handle1(index, order) {

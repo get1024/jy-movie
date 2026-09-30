@@ -59,14 +59,14 @@ export default {
     }
   },
 
-  mounted() {
-    ListDailyWork().then(res => {
-      setTimeout(() => {
-        this.list = res.data
-      }, 700)
-    })
+  async mounted() {
+    try {
+      const res = await ListDailyWork()
+      if (res.success) this.list = Array.isArray(res.data) ? res.data : []
+    } catch (error) {
+      // Leave the task list usable when loading fails.
+    }
   },
-
 
   methods: {
 

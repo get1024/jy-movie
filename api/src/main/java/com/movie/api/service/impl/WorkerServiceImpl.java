@@ -10,6 +10,7 @@ import com.movie.api.model.entity.Worker;
 import com.movie.api.service.RoleService;
 import com.movie.api.service.WorkerService;
 import com.movie.api.utils.DataTimeUtil;
+import com.movie.api.utils.PasswordSupport;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +40,7 @@ public class WorkerServiceImpl implements WorkerService {
         }
         String now = DataTimeUtil.getNowTimeString();
         worker.setEntry(true);
-        worker.setPassword(bCryptPasswordEncoder.encode(worker.getPassword()));
+        worker.setPassword(PasswordSupport.forCreate(worker.getPassword(), bCryptPasswordEncoder));
         worker.setId(UUID.randomUUID().toString());
         worker.setCreateAt(now);
         worker.setUpdateAt(now);
@@ -65,7 +66,9 @@ public class WorkerServiceImpl implements WorkerService {
         if (one != null && !one.getId().equals(worker.getId())) {
             throw new Exception("已存在的用户名");
         }
-        worker.setPassword(bCryptPasswordEncoder.encode(worker.getPassword()));
+        Worker existing = workerMapper.selectById(worker.getId());
+        if (existing == null) throw new IllegalArgumentException("员工不存在");
+        worker.setPassword(PasswordSupport.forUpdate(worker.getPassword(), existing.getPassword(), bCryptPasswordEncoder));
         worker.setUpdateAt(DataTimeUtil.getNowTimeString());
         workerMapper.updateById(worker);
     }

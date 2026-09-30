@@ -1,6 +1,10 @@
 package com.movie.api.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.ToString;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +24,9 @@ public class Worker implements Serializable {
 
     private String username;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ToString.Exclude
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     private String password;
 
     private String nickname;

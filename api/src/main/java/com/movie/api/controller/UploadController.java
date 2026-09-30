@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 
 /**
  * 上传图片存放为二进制到mysql
@@ -28,6 +29,9 @@ public class UploadController {
 
     @Value("${server.port}")
     private String serverPort;
+
+    @Value("${app.public-url:}")
+    private String publicUrl;
 
     @Resource
     private UploadService uploadService;
@@ -44,7 +48,15 @@ public class UploadController {
         if (file.isEmpty()) {
             throw new Exception("上传失败，请选择文件");
         }
-        return "http://localhost:" + serverPort + "/api/upload?id=" + uploadService.checkAndSaveUpload(file);
+        String base = publicUrl == null || publicUrl.trim().isEmpty()
+                ? "http://localhost:" + serverPort : publicUrl.trim();
+        URI uri = URI.create(base);
+        if (!("http".equals(uri.getScheme()) || "https".equals(uri.getScheme()))
+                || uri.getHost() == null || uri.getUserInfo() != null
+                || uri.getQuery() != null || uri.getFragment() != null) {
+            throw new IllegalStateException("APP_PUBLIC_URL 必须是有效的 HTTP(S) 服务地址");
+        }
+        return base.replaceAll("/+$", "") + "/api/upload?id=" + uploadService.checkAndSaveUpload(file);
     }
 
     @DeleteMapping("")

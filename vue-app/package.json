@@ -4,23 +4,25 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "test": "node --test tests/*.test.cjs"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "element-ui": "^2.15.0",
-    "vue": "^2.6.11",
-    "vue-router": "^3.2.0"
+    "axios": "^1.20.0",
+    "element-ui": "2.15.14",
+    "vue": "2.7.16",
+    "vue-router": "3.6.5"
   },
   "devDependencies": {
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "vue-particles": "^1.0.9",
-    "vue-template-compiler": "^2.6.11"
+    "@vue/cli-service": "5.0.9",
+    "vue-template-compiler": "2.7.16"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "engines": {
+    "node": ">=22.0.0"
+  }
 }

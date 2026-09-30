@@ -316,14 +316,16 @@ export default {
     }
   },
 
-  mounted() {
+  async mounted() {
     this.tableLoading = true
-    ListAllFilm().then((res) => {
-      setTimeout(() => {
-        this.filmList = res.data
-        this.tableLoading = false
-      }, 700)
-    })
+    try {
+      const res = await ListAllFilm()
+      if (res.success) this.filmList = Array.isArray(res.data) ? res.data : []
+    } catch (error) {
+      // The request interceptor reports transport errors.
+    } finally {
+      this.tableLoading = false
+    }
   },
 
   methods: {

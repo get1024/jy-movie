@@ -6,6 +6,7 @@ import com.movie.api.model.dto.LoginDto;
 import com.movie.api.model.entity.User;
 import com.movie.api.service.UserService;
 import com.movie.api.utils.DataTimeUtil;
+import com.movie.api.utils.PasswordSupport;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -44,9 +45,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        User existing = userMapper.selectById(user.getId());
+        if (existing == null) throw new IllegalArgumentException("用户不存在");
+        user.setPassword(PasswordSupport.forUpdate(user.getPassword(), existing.getPassword(), bCryptPasswordEncoder));
+        user.setUpdateAt(DataTimeUtil.getNowTimeString());
         userMapper.updateById(user);
-        return user;
+        return userMapper.selectById(user.getId());
     }
 
     @Override
@@ -58,7 +62,7 @@ public class UserServiceImpl implements UserService {
         user.setId(UUID.randomUUID().toString());
         user.setCreateAt(now);
         user.setUpdateAt(now);
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(PasswordSupport.forCreate(user.getPassword(), bCryptPasswordEncoder));
         userMapper.insert(user);
         return user;
     }

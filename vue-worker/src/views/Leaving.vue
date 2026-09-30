@@ -2,10 +2,10 @@
   <div class="main">
     <div class="item2" v-for="(item, index) in leavingMessageList" :key="index">
       <div style="display: flex">
-        <img class="av2" :src="item.user.avatar" alt="null">
+        <img v-if="item.user" class="av2" :src="item.user.avatar" alt="null">
         <div>
-          <div class="d2">{{ item.user.nickname }}</div>
-          <div v-if="!item.user.nickname" class="d2">匿名用户</div>
+          <div class="d2">{{ item.user && item.user.nickname }}</div>
+          <div v-if="!item.user || !item.user.nickname" class="d2">匿名用户</div>
           <div class="d3">{{ item.leavingMessage.content }}</div>
           <div class="d2">Time: {{ item.leavingMessage.createAt }}</div>
         </div>

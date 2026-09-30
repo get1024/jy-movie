@@ -44,7 +44,7 @@
         </el-upload>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button type="primary" :loading="loading" @click="onSubmit">立即创建</el-button>
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
@@ -77,17 +77,17 @@ export default {
   },
   methods: {
 
-    onSubmit() {
-      this.loading = true;
-      CreateWorker(this.form).then(res => {
-        setTimeout(() => {
-          this.$message({
-            message: '成功消息：添加员工成功',
-            type: 'success'
-          });
-          this.loading = false
-        }, 700)
-      })
+    async onSubmit() {
+      if (this.loading) return
+      this.loading = true
+      try {
+        const res = await CreateWorker(this.form)
+        if (res.success) this.$message({ message: '成功消息：添加员工成功', type: 'success' })
+      } catch (error) {
+        // Keep the form available for retry.
+      } finally {
+        this.loading = false
+      }
     },
 
     handleUploadSuccess(res) {

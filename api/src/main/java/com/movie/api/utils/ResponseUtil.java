@@ -1,30 +1,31 @@
 package com.movie.api.utils;
 
-import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public final class ResponseUtil {
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResponseUtil.class);
 
-    public static void writeJson(HttpServletResponse response, Object o) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PATCH, DELETE, PUT");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        response.setContentType("application/json;charset=utf-8");
-        response.setStatus(200);
-        try {
-            PrintWriter writer = response.getWriter();
-            writer.write(JSON.toJSONString(o));
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("write json error");
-            e.printStackTrace();
-        }
+    private ResponseUtil() {
     }
 
+    public static void writeJson(HttpServletResponse response, Object value) {
+        writeJson(response, value, HttpServletResponse.SC_OK);
+    }
+
+    public static void writeJson(HttpServletResponse response, Object value, int status) {
+        // CORS is handled centrally by Spring Security. Preserve the existing API envelope.
+        response.setContentType("application/json;charset=utf-8");
+        response.setStatus(status);
+        try {
+            OBJECT_MAPPER.writeValue(response.getWriter(), value);
+        } catch (IOException exception) {
+            LOGGER.warn("Unable to write API response", exception);
+        }
+    }
 }

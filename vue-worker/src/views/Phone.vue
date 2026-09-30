@@ -9,8 +9,8 @@
     <el-table ref="filterTable" :data="list" style="width: 100%">
       <el-table-column label="姓名" width="180">
         <template slot-scope="props">
-          <img class="av" alt="null" :src="props.row.user.avatar" />
-          <div class="d1">{{ props.row.user.nickname }}</div>
+          <img v-if="props.row.user" class="av" alt="null" :src="props.row.user.avatar" />
+          <div class="d1">{{ props.row.user ? props.row.user.nickname : '用户已删除' }}</div>
         </template>
       </el-table-column>
       <el-table-column prop="user.email" label="邮箱">

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Layout from "@/components/layout/Layout"
 
 Vue.use(VueRouter);
 
@@ -15,8 +14,9 @@ const routes = [
     //公共布局下的路由
     {
         path: '/',
-        component: Layout,
+        component: () => import('@/components/layout/Layout'),
         children: [
+            { path: '', redirect: '/leaving' },
 
             {
                 path: '/leaving',
@@ -69,7 +69,7 @@ const router = new VueRouter({
 
 //路由卫士
 router.beforeEach((to, from, next) => {
-    let isAuthenticated = localStorage.getItem("token") !== null
+    let isAuthenticated = Boolean(localStorage.getItem("token"))
     if (to.name !== 'Login' && !isAuthenticated) next({name: 'Login'})
     else next()
 })

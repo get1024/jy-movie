@@ -5,6 +5,7 @@ import com.movie.api.model.support.ResponseResult;
 import com.movie.api.utils.ResponseUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -46,8 +47,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         //身份验证失败
         http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
-            ResponseUtil.writeJson(response, new ResponseResult<>(403, "身份认证失败, 请重新登录"));
-        });
+            ResponseUtil.writeJson(response, new ResponseResult<>(401, "身份认证失败, 请重新登录"), 401);
+        }).accessDeniedHandler((request, response, exception) ->
+                ResponseUtil.writeJson(response, new ResponseResult<>(403, "你没有访问权限"), 403));
+
+        // The catalog and review pages are public; account and mutation APIs require a token.
+        // Existing method-level permissions remain in force. Resource ownership checks are separate.
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/user/login", "/api/user/register",
+                        "/api/worker/login", "/api/admin/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/film", "/api/film/**",
+                        "/api/arrangement", "/api/arrangement/**", "/api/poster", "/api/poster/**",
+                        "/api/activity", "/api/activity/**", "/api/fe", "/api/lm",
+                        "/api/worker", "/api/we", "/api/upload").permitAll()
+                .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/v2/api-docs", "/webjars/**",
+                        "/error").permitAll()
+                .antMatchers("/api/**").authenticated()
+                .anyRequest().denyAll();
 
         http.addFilter(new AuthorizationFilter(authenticationManagerBean()));
 

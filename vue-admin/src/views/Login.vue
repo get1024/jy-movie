@@ -56,6 +56,7 @@ export default {
     data() {
         return {
             loading: false,
+            loginActive: true,
             role: 'admin',
             username: '@admin',
             password: '123456',
@@ -65,65 +66,32 @@ export default {
             roleError: false,
         }
     },
+    beforeDestroy() {
+        this.loginActive = false
+        this.loading = false
+    },
     methods: {
-        postLogin() {
-            this.loading = true;
-            const LoginData = {
-                username: this.username,
-                password: this.password,
-                remember: this.remember,
-            };
-
-            if (LoginData.username.length <= 5) {
-                setTimeout(() => {
-                    this.loading = false;
-                    this.usernameError = true;
-                }, 700)
-                return
-            } else {
-                this.usernameError = false;
+        async postLogin() {
+            if (!this.loginActive || this.loading) return
+            this.usernameError = this.username.length < 6
+            this.passwordError = this.password.length < 6
+            this.roleError = !this.role
+            if (this.usernameError || this.passwordError || this.roleError) return
+            this.loading = true
+            const loginData = { username: this.username, password: this.password, remember: this.remember }
+            const role = this.role
+            try {
+                const res = await Login(role, loginData)
+                if (!this.loginActive || !res.success || !res.data || !res.data.token || (role === 'worker' && !res.data.worker)) return
+                localStorage.setItem('token', res.data.token)
+                if (role === 'worker') localStorage.setItem('wid', res.data.worker.id)
+                localStorage.setItem('role', role)
+                await this.$router.push('/')
+            } catch (error) {
+                // The request interceptor reports transport errors; allow another attempt.
+            } finally {
+                if (this.loginActive) this.loading = false
             }
-
-            if (LoginData.password.length <= 5) {
-                setTimeout(() => {
-                    this.loading = false;
-                    this.passwordError = true;
-                }, 700)
-                return
-            } else {
-                this.passwordError = false;
-            }
-
-            if (!this.role) {
-                setTimeout(() => {
-                    this.loading = false;
-                    this.roleError = true;
-                }, 700)
-                return
-            } else {
-                this.roleError = false;
-            }
-
-            Login(this.role, LoginData).then(res => {
-                if (!res.success) {
-                    setTimeout(() => {
-                        this.loading = false;
-                    }, 700)
-                } else {
-                    setTimeout(() => {
-                        //登录成功
-                        console.log(res.data)
-                        localStorage.setItem("token", res.data.token)
-                        if (this.role === 'worker') {
-                            localStorage.setItem("wid", res.data.worker.id)
-                        }
-                        localStorage.setItem("role", this.role)
-                        this.$router.push("/")
-                        this.loading = false;
-                    }, 700)
-                }
-            })
-
         }
     }
 }
